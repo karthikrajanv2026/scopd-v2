@@ -1,5 +1,49 @@
 // Scop'd v2 — capability-first architecture
 
+function buildResponse(role, candidate, fit) {
+  if (!fit) {
+    return {
+      role_label: role.title || 'Role Analysis',
+      verdict: null,
+      why: [
+        `This is a ${role.context?.industry || 'general'} role focused on ${(role.responsibilities || []).slice(0, 2).join(' and ').toLowerCase()}.`
+      ],
+      strengths: role.skills || [],
+      gaps: [],
+      decision_reasons: role.expectations || [],
+      risk: null,
+      career_impact: [],
+      screening_priorities: [],
+      hidden_expectations: role.expectations || [],
+      role,
+      candidate: null,
+      fit: null
+    };
+  }
+
+  const capFit = fit.capability_fit || {};
+  const verdictMap = { strong: 'Apply confidently', moderate: 'Apply with caution', weak: 'Do not apply' };
+
+  return {
+    role_label: role.title || 'Role Analysis',
+    verdict: verdictMap[capFit.verdict] || 'Review carefully',
+    why: [
+      `This is a ${role.context?.industry || 'general'} role focused on ${(role.responsibilities || []).slice(0, 2).join(' and ').toLowerCase()}.`,
+      capFit.summary || '',
+    ].filter(Boolean),
+    strengths: capFit.matched || [],
+    gaps: capFit.gaps || [],
+    decision_reasons: fit.screening_priorities || [],
+    risk: fit.hidden_expectations ? fit.hidden_expectations.join('. ') : null,
+    career_impact: role.expectations || [],
+    screening_priorities: fit.screening_priorities || [],
+    hidden_expectations: fit.hidden_expectations || [],
+    role,
+    candidate,
+    fit
+  };
+}
+
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
@@ -14,11 +58,7 @@ export default async function handler(req, res) {
     const candidate = cvText ? await extractCandidate(client, cvText) : null;
     const fit = candidate ? await evaluateFit(client, role, candidate, goals || null) : null;
 
-    return res.status(200).json({
-      role,
-      candidate,
-      fit
-    });
+    return res.status(200).json(buildResponse(role, candidate, fit));
 
   } catch (err) {
     console.error('classify error:', err);
