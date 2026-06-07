@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scop'd — Data Analyst Job Description Decoder | DA Role Intelligence</title>
+<meta name="description" content="Decode any Data Analyst job description. Scop'd reveals DA hiring signals, scores your CV fit against SQL, dashboards, and analytics requirements. Free, no signup.">
+<meta property="og:title" content="Scop'd — DA Role Intelligence">
+<meta property="og:description" content="Decode Data Analyst job descriptions. See recruiter signals, score your CV fit, and identify the gaps before you apply. Free, no signup.">
+<meta property="og:url" content="https://scopd.online/da/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Scop'd — DA Role Intelligence">
+<meta name="twitter:description" content="Decode Data Analyst job descriptions. See recruiter signals and your CV gaps before you apply.">
+<link rel="canonical" href="https://scopd.online/da/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Scop'd — DA Role Intelligence",
+  "url": "https://scopd.online/da/",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "offers": {"@type":"Offer","price":"0","priceCurrency":"GBP"},
+  "description": "Paste a Data Analyst job description. Scop'd decodes the hiring signals, identifies SQL and analytics requirements, and shows where your CV falls short."
+}
+</script>
+<script src="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:#0C0C10; --bg2:#13131A; --bg3:#1A1A24; --bg4:#22222E;
+  --border:rgba(255,255,255,0.08); --border-hi:rgba(255,255,255,0.15);
+  --text:#F0F0F8; --text-soft:#9898B0; --text-muted:#52526A;
+  --accent:#6366F1; --accent-glow:rgba(99,102,241,0.3);
+  --accent-soft:rgba(99,102,241,0.12); --accent-mid:rgba(99,102,241,0.25);
+  --green:#22C55E; --green-soft:rgba(34,197,94,0.1); --green-border:rgba(34,197,94,0.25);
+  --red:#EF4444; --red-soft:rgba(239,68,68,0.1); --red-border:rgba(239,68,68,0.25);
+  --amber:#F59E0B; --amber-soft:rgba(245,158,11,0.1); --amber-border:rgba(245,158,11,0.25);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',-apple-system,sans-serif;background:radial-gradient(circle at 20% 20%,rgba(99,102,241,0.15),transparent 40%),var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;}
+.header{position:fixed;top:0;left:0;right:0;z-index:300;height:64px;padding:0 30px;display:flex;align-items:center;justify-content:space-between;background:rgba(12,12,16,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.logo{font-family:'IBM Plex Serif',Georgia,serif;font-size:20px;font-weight:600;display:flex;align-items:center;gap:8px;color:var(--text);text-decoration:none;}
+.logo-dot{width:7px;height:7px;background:var(--accent);border-radius:50%;box-shadow:0 0 8px var(--accent);}
+.header-right{display:flex;align-items:center;gap:12px;}
+.header-switch{font-size:12px;font-weight:600;color:var(--accent);text-decoration:none;padding:5px 12px;border:1px solid rgba(99,102,241,0.25);border-radius:5px;transition:all 0.15s;}
+.header-switch:hover{background:var(--accent-soft);border-color:var(--accent);}
+.page-content{padding-top:64px;}
+.form-container{max-width:900px;margin:0 auto;padding:64px 24px 80px;text-align:center;}
+.form-hero{margin-bottom:40px;}
+.form-hero h1{font-family:'IBM Plex Serif',Georgia,serif;font-size:44px;font-weight:600;line-height:1.08;letter-spacing:-1px;color:var(--text);margin-bottom:12px;}
+.form-hero h1 em{font-style:italic;color:var(--accent);}
+.form-hero p{font-size:16px;color:var(--text-muted);line-height:1.6;}
+.form-card{background:var(--bg2);border-radius:16px;padding:40px;border:1px solid var(--border);box-shadow:0 30px 80px rgba(0,0,0,0.6);text-align:left;}
+.flabel{font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);display:block;margin-bottom:8px;}
+.jd-box{width:100%;height:200px;padding:16px;background:var(--bg);border:1px solid rgba(255,255,255,0.1);border-radius:10px;color:var(--text);font-family:'Inter',sans-serif;font-size:14px;line-height:1.6;resize:vertical;outline:none;transition:border-color 0.2s,box-shadow 0.2s;}
+.jd-box:focus{border-color:rgba(99,102,241,0.6);box-shadow:0 0 0 3px var(--accent-soft);}
+.jd-box::placeholder{color:var(--text-muted);}
+.cv-profile-banner{display:none;margin-top:16px;padding:12px 16px;background:var(--green-soft);border:1px solid var(--green-border);border-radius:8px;align-items:center;justify-content:space-between;gap:12px;}
+.cv-profile-banner.active{display:flex;}
+.cv-profile-left{display:flex;align-items:center;gap:8px;}
+.cv-profile-dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 6px rgba(34,197,94,0.5);flex-shrink:0;}
+.cv-profile-text{font-size:13px;font-weight:600;color:var(--green);}
+.cv-profile-sub{font-size:11px;color:var(--text-muted);margin-top:2px;}
+.cv-profile-reset{background:none;border:1px solid var(--green-border);padding:4px 10px;border-radius:4px;font-size:11px;color:var(--text-muted);cursor:pointer;font-family:'Inter',sans-serif;transition:all 0.15s;}
+.cv-profile-reset:hover{color:var(--red);border-color:var(--red-border);}
+.cv-card{margin-top:16px;background:var(--bg3);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.cv-card-top{padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);}
+.cv-card-title{font-size:13px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:8px;}
+.opt-tag{font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--amber);background:var(--amber-soft);border:1px solid var(--amber-border);padding:2px 8px;border-radius:4px;}
+.cv-hint{padding:8px 16px;font-size:12px;color:var(--text-muted);border-bottom:1px solid var(--border);line-height:1.5;}
+.cv-tabs{display:flex;border-bottom:1px solid var(--border);}
+.cv-tab{flex:1;padding:9px;font-size:12px;font-weight:600;font-family:'Inter',sans-serif;text-align:center;background:none;border:none;color:var(--text-muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:all 0.15s;}
+.cv-tab.active{color:var(--accent);border-bottom-color:var(--accent);background:var(--accent-soft);}
+.cv-upload-pane{display:none;padding:14px 16px;}
+.cv-upload-pane.active{display:block;}
+.cv-paste-pane{display:none;}
+.cv-paste-pane.active{display:block;}
+.upload-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;background:var(--bg4);border:1px solid var(--border-hi);border-radius:6px;font-size:13px;font-weight:500;color:var(--text-soft);cursor:pointer;transition:all 0.15s;}
+.upload-btn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft);}
+.file-status{display:none;font-size:12px;font-weight:500;margin-top:8px;}
+.cv-paste-box{width:100%;height:120px;padding:12px 16px;background:transparent;border:none;color:var(--text);font-family:'Inter',sans-serif;font-size:13px;line-height:1.6;resize:vertical;outline:none;}
+.cv-paste-box::placeholder{color:var(--text-muted);}
+.cta-btn{width:100%;margin-top:24px;padding:16px;background:linear-gradient(135deg,#6366F1,#8B5CF6);color:white;border:none;border-radius:10px;font-family:'Inter',sans-serif;font-size:16px;font-weight:700;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 24px var(--accent-glow);}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(99,102,241,0.5);}
+.trust-note{text-align:center;margin-top:10px;font-size:11px;color:var(--text-muted);}
+.trust-note span{margin:0 5px;}
+.loading{display:none;min-height:100vh;flex-direction:column;align-items:center;justify-content:center;gap:0;background:radial-gradient(circle at 50% 20%,rgba(99,102,241,0.2),transparent 50%),var(--bg);}
+.loading-title{font-family:'IBM Plex Serif',Georgia,serif;font-size:34px;font-weight:600;text-align:center;margin-bottom:30px;}
+.progress-wrap{width:520px;height:6px;background:var(--bg3);border-radius:6px;overflow:hidden;margin-bottom:40px;}
+.progress-fill{height:100%;width:0%;background:linear-gradient(90deg,#6366F1,#8B5CF6);animation:progressAnim 6s forwards;}
+@keyframes progressAnim{to{width:100%;}}
+.loading-steps{display:flex;flex-direction:column;gap:16px;width:520px;}
+.lstep{padding:14px 18px;background:var(--bg2);border-radius:10px;border:1px solid var(--border);color:var(--text-muted);transition:all 0.4s;font-size:14px;}
+.lstep.active{border-color:var(--accent);color:var(--text);box-shadow:0 0 20px rgba(99,102,241,0.25);}
+.err-wrap{display:none;max-width:640px;margin:0 auto;padding:0 24px;}
+.err-card{background:var(--red-soft);border:1px solid var(--red-border);border-radius:7px;padding:14px 18px;font-size:14px;color:var(--red);}
+.result{display:none;max-width:800px;margin:0 auto;padding:80px 24px 80px;}
+.save-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+.save-role-title{font-size:14px;font-weight:600;color:var(--text-soft);}
+.save-btn{padding:7px 14px;background:var(--bg2);border:1px solid var(--border-hi);border-radius:5px;color:var(--accent);font-size:12px;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;transition:all 0.15s;}
+.save-btn:hover{border-color:var(--accent);background:var(--accent-soft);}
+.saved-status{font-size:12px;font-weight:700;color:var(--green);}
+
+/* Decision card */
+.decision-card{border-radius:16px;padding:32px;margin-bottom:24px;border:1px solid var(--accent-mid);background:var(--accent-soft);opacity:0;transform:translateY(8px);transition:opacity 0.35s,transform 0.35s;}
+.decision-card.visible{opacity:1;transform:translateY(0);}
+.decision-primary{font-family:'IBM Plex Serif',Georgia,serif;font-size:38px;font-weight:600;letter-spacing:-0.5px;margin-bottom:6px;}
+.decision-primary.apply{color:var(--green);}
+.decision-primary.caution{color:var(--amber);}
+.decision-primary.skip{color:var(--amber);}
+.decision-primary.no{color:var(--red);}
+.decision-secondary{font-size:14px;color:var(--text-soft);margin-bottom:24px;}
+.decision-divider{height:1px;background:var(--border);margin-bottom:20px;}
+.decision-section{margin-bottom:18px;}
+.decision-section:last-child{margin-bottom:0;}
+.decision-section-label{font-size:10px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;}
+.decision-section-body{font-size:14px;color:var(--text-soft);line-height:1.7;}
+.decision-list{display:flex;flex-direction:column;gap:6px;}
+.decision-list-item{display:flex;align-items:flex-start;gap:8px;font-size:14px;color:var(--text-soft);line-height:1.6;}
+.decision-list-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);margin-top:8px;flex-shrink:0;}
+.evidence-cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:4px;}
+@media(max-width:520px){.evidence-cols{grid-template-columns:1fr;}}
+.evidence-col-label{font-size:11px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:6px;}
+.evidence-col-label.found{color:var(--green);}
+.evidence-col-label.missing{color:var(--red);}
+.evidence-item{font-size:13px;color:var(--text-soft);padding:5px 0;border-bottom:1px solid var(--border);line-height:1.5;}
+.evidence-item:last-child{border-bottom:none;}
+
+/* CV profile blocks */
+.section-label{font-size:10px;font-weight:600;letter-spacing:0.09em;text-transform:uppercase;color:var(--text-muted);margin:32px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--border);display:block;}
+.rblock{margin-bottom:0;opacity:0;transform:translateY(6px);transition:opacity 0.3s,transform 0.3s;}
+.rblock.visible{opacity:1;transform:translateY(0);}
+.rblock+.rblock{border-top:1px solid var(--border);}
+.rblock-inner{padding:20px 0;}
+.cbadge{font-size:10px;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;padding:3px 10px;border-radius:4px;display:inline-block;margin-bottom:14px;}
+.cbadge.High{background:var(--green-soft);color:var(--green);border:1px solid var(--green-border);}
+.cbadge.Medium{background:var(--amber-soft);color:var(--amber);border:1px solid var(--amber-border);}
+.cbadge.Low{background:var(--red-soft);color:var(--red);border:1px solid var(--red-border);}
+.dims{display:flex;flex-direction:column;gap:12px;}
+.dim-row{display:flex;align-items:center;gap:12px;}
+.dim-name{font-size:13px;color:var(--text-muted);width:160px;flex-shrink:0;}
+.dim-track{flex:1;height:4px;background:var(--bg4);border-radius:4px;overflow:hidden;}
+.dim-fill{height:100%;background:linear-gradient(90deg,#6366F1,#A78BFA);border-radius:4px;transition:width 0.9s cubic-bezier(0.4,0,0.2,1);}
+.dim-val{font-size:12px;font-weight:600;color:var(--text-soft);width:24px;text-align:right;flex-shrink:0;}
+.profile-type-name{font-family:'IBM Plex Serif',Georgia,serif;font-size:30px;font-weight:600;letter-spacing:-0.4px;color:var(--text);margin-bottom:6px;}
+.profile-summary{font-size:15px;color:var(--text-soft);line-height:1.8;margin-bottom:16px;}
+.recommended-roles{display:flex;flex-direction:column;gap:0;}
+.rec-role{display:flex;align-items:flex-start;gap:10px;padding:14px 0;border-bottom:1px solid var(--border);}
+.rec-role:last-child{border-bottom:none;}
+.rec-role-left{flex:1;}
+.rec-role-title{font-size:15px;font-weight:600;color:var(--text);margin-bottom:6px;display:flex;align-items:center;gap:8px;}
+.rec-role-ico{font-size:12px;color:var(--accent);font-weight:700;flex-shrink:0;}
+.rec-role-links{display:flex;align-items:center;gap:8px;}
+.rec-role-link{font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px;text-decoration:none;border:1px solid var(--border-hi);color:var(--text-soft);background:var(--bg3);transition:all 0.15s;}
+.rec-role-link:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft);}
+.rec-role-link-label{font-size:10px;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--text-muted);margin-right:2px;}
+.signal-list{display:flex;flex-direction:column;gap:0;}
+.signal-row{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);font-size:14px;color:var(--text-soft);}
+.signal-row:last-child{border-bottom:none;}
+.signal-ico-ok{color:var(--green);font-size:12px;margin-top:2px;flex-shrink:0;font-weight:700;}
+.signal-ico-bad{color:var(--red);font-size:12px;margin-top:2px;flex-shrink:0;font-weight:700;}
+.signal-why{font-size:12px;color:var(--text-muted);margin-top:3px;}
+.imp{margin-left:auto;font-size:10px;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;padding:2px 6px;border-radius:4px;flex-shrink:0;}
+.imp.High{background:var(--red-soft);color:var(--red);border:1px solid var(--red-border);}
+.imp.Medium{background:var(--amber-soft);color:var(--amber);border:1px solid var(--amber-border);}
+.imp.Low{background:var(--accent-soft);color:var(--accent);border:1px solid var(--accent-mid);}
+.hon-text{font-size:15px;color:var(--text-soft);line-height:1.8;}
+.jd-prompt{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:22px;margin-top:16px;}
+.jd-prompt-title{font-family:'IBM Plex Serif',Georgia,serif;font-size:18px;font-weight:600;color:var(--text);margin-bottom:6px;}
+.jd-prompt-sub{font-size:13px;color:var(--text-muted);margin-bottom:14px;line-height:1.6;}
+.jd-prompt-box{width:100%;height:160px;padding:14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;color:var(--text);font-family:'Inter',sans-serif;font-size:14px;line-height:1.6;resize:vertical;outline:none;transition:border-color 0.2s;}
+.jd-prompt-box:focus{border-color:rgba(99,102,241,0.6);}
+.jd-prompt-box::placeholder{color:var(--text-muted);}
+.jd-prompt-btn{width:100%;margin-top:10px;padding:13px;background:linear-gradient(135deg,#6366F1,#8B5CF6);color:white;border:none;border-radius:8px;font-family:'Inter',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;}
+.jd-prompt-btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(99,102,241,0.4);}
+.dec-stack{display:flex;flex-direction:column;gap:12px;margin-top:32px;padding-top:24px;border-top:1px solid var(--border);}
+.btn-primary{width:100%;padding:15px;background:linear-gradient(135deg,#6366F1,#8B5CF6);color:white;border:none;border-radius:10px;font-family:'Inter',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 20px var(--accent-glow);}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(99,102,241,0.5);}
+.btn-ghost{width:100%;padding:10px;background:transparent;color:var(--text-muted);border:none;font-size:13px;font-family:'Inter',sans-serif;cursor:pointer;transition:color 0.15s;}
+.btn-ghost:hover{color:var(--red);}
+.reset-row{text-align:center;margin-top:20px;}
+.reset-lnk{background:none;border:none;font-size:13px;color:var(--text-muted);cursor:pointer;font-family:'Inter',sans-serif;transition:color 0.15s;}
+.reset-lnk:hover{color:var(--text-soft);}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <a href="/" class="logo">Scopd<div class="logo-dot"></div></a>
+  <div class="header-right">
+    <a class="header-switch" href="/tool.html">← Analyse another role</a>
+  </div>
+</div>
+
+<div id="formView" class="page-content">
+  <div class="form-container">
+    <div class="form-hero">
+      <h1>Know if this DA role is worth <em>your time</em></h1>
+      <p>Paste any data analyst job description. Scopd decodes the hiring signals and shows exactly where your CV falls short.</p>
+    </div>
+    <div class="form-card">
+      <label class="flabel" for="jdInput">Job Description</label>
+      <textarea class="jd-box" id="jdInput" placeholder="Paste the full job description here..."></textarea>
+
+      <div class="cv-profile-banner" id="cvProfileBanner">
+        <div class="cv-profile-left">
+          <div class="cv-profile-dot"></div>
+          <div>
+            <div class="cv-profile-text">CV profile loaded</div>
+            <div class="cv-profile-sub" id="cvProfileSub">Analysing against your experience</div>
+          </div>
+        </div>
+        <button class="cv-profile-reset" onclick="resetCVProfile()">Update CV</button>
+      </div>
+
+      <div class="cv-card" id="cvCard">
+        <div class="cv-card-top">
+          <div class="cv-card-title">Your CV <span class="opt-tag">Optional</span></div>
+        </div>
+        <div class="cv-hint">Upload once — Scopd reuses your profile for every role this session.</div>
+        <div class="cv-tabs">
+          <button class="cv-tab active" onclick="switchCVTab('upload',event)">Upload PDF</button>
+          <button class="cv-tab" onclick="switchCVTab('paste',event)">Paste Text</button>
+        </div>
+        <div class="cv-upload-pane active" id="cvUploadArea">
+          <label class="upload-btn" for="cvFile"><span>↑</span><span id="uploadLabel">Choose PDF file</span></label>
+          <input type="file" id="cvFile" accept=".pdf" style="display:none" onchange="handleFileUpload(this)">
+          <div class="file-status" id="fileStatus"></div>
+        </div>
+        <div class="cv-paste-pane" id="cvPasteArea">
+          <textarea class="cv-paste-box" id="cvPasteInput" placeholder="Paste your CV text here..."></textarea>
+        </div>
+      </div>
+
+      <button class="cta-btn" onclick="analyse()">Decode Hiring Signals →</button>
+      <div class="trust-note">Takes ~5 seconds<span>•</span>No signup required<span>•</span>Compare up to 10 roles</div>
+    </div>
+  </div>
+</div>
+
+<div class="loading page-content" id="loading">
+  <div class="loading-title">Decoding recruiter signals</div>
+  <div class="progress-wrap"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="loading-steps">
+    <div class="lstep active" id="lstep1">Reading job description</div>
+    <div class="lstep" id="lstep2">Extracting recruiter signals</div>
+    <div class="lstep" id="lstep3">Classifying role archetype</div>
+    <div class="lstep" id="lstep4">Evaluating screening risk</div>
+    <div class="lstep" id="lstep5">Generating insights</div>
+  </div>
+</div>
+
+<div class="err-wrap page-content" id="errorBox">
+  <div class="err-card" id="errorMsg"></div>
+</div>
+
+<div class="result page-content" id="result">
+  <div class="save-row">
+    <div class="save-role-title" id="saveRoleTitle"></div>
+    <div id="saveWrap"></div>
+  </div>
+
+  <!-- Main decision card -->
+  <div class="decision-card" id="decisionCard">
+    <div class="decision-primary" id="decisionPrimary"></div>
+    <div class="decision-secondary" id="decisionSecondary"></div>
+    <div class="decision-divider"></div>
+    <div id="decisionBody"></div>
+  </div>
+
+  <!-- CV profile view (cv-only mode) -->
+  <div id="cvResultBlocks" style="display:none;">
+    <span class="section-label">Your DA profile</span>
+    <div class="rblock" id="block-profile">
+      <div class="rblock-inner">
+        <div class="profile-type-name" id="profileType"></div>
+        <span class="cbadge" id="profileConfidence"></span>
+        <div class="profile-summary" id="profileSummary"></div>
+        <div style="font-size:10px;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px;">Profile dimensions</div>
+        <div class="dims" id="profileDimensions"></div>
+      </div>
+    </div>
+    <span class="section-label">Roles you align with</span>
+    <div class="rblock" id="block-recommended">
+      <div class="rblock-inner"><div class="recommended-roles" id="recommendedRoles"></div></div>
+    </div>
+    <span class="section-label">Your signal map</span>
+    <div class="rblock" id="block-strengths">
+      <div class="rblock-inner"><div class="signal-list" id="strongestSignals"></div></div>
+    </div>
+    <div class="rblock" id="block-gaps">
+      <div class="rblock-inner"><div class="signal-list" id="signalGaps"></div></div>
+    </div>
+    <span class="section-label">Honest assessment</span>
+    <div class="rblock" id="block-cv-honest">
+      <div class="rblock-inner">
+        <p class="hon-text" id="cvHonestText"></p>
+        <p class="hon-text" style="margin-top:12px;color:var(--accent);font-weight:500;" id="nextStepsText"></p>
+      </div>
+    </div>
+    <div class="rblock" id="block-jd-prompt">
+      <div class="rblock-inner">
+        <div class="jd-prompt">
+          <div class="jd-prompt-title">Now compare against a specific JD</div>
+          <div class="jd-prompt-sub">Paste a job description to see exactly how your profile matches against this role's hiring signals.</div>
+          <textarea class="jd-prompt-box" id="jdPromptInput" placeholder="Paste a job description here..."></textarea>
+          <button class="jd-prompt-btn" onclick="analyseFromProfile()">Compare Against This JD →</button>
+        </div>
+      </div>
+    </div>
+    <div class="dec-stack">
+      <button class="btn-primary" onclick="reset()">Analyse Another Role →</button>
+      <button class="btn-ghost" onclick="reset()">← Start over</button>
+    </div>
+  </div>
+
+  <div class="reset-row">
+    <button class="reset-lnk" onclick="reset()">← Analyse another role</button>
+  </div>
+</div>
+
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc='https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+const sessionId=crypto.randomUUID();
+const LOG_URL='/api/log';
+const STORAGE_KEY='fitfirst_da_saved_roles';
+const SK_PROFILE='lumaxCapabilityProfile';
+let lastRoleType=null,cvText=null,resultData=null;
+let currentScreen='form',currentMode='jd';
+let lstepInterval=null;
+
+function getCapabilityProfile(){
+  try{return JSON.parse(sessionStorage.getItem(SK_PROFILE));}catch(e){return null;}
+}
+
+function renderCVProfileBanner(){
+  const profile=getCapabilityProfile();
+  const banner=document.getElementById('cvProfileBanner');
+  const cvCard=document.getElementById('cvCard');
+  if(profile){
+    banner.classList.add('active');
+    const sigs=profile.strongest_signals||[];
+    document.getElementById('cvProfileSub').textContent=sigs.length>0
+      ?sigs.slice(0,3).join(' · ')+(sigs.length>3?' + more':'')
+      :'Analysing against your experience';
+    cvCard.style.display='none';
+    if(profile._rawCVText) cvText=profile._rawCVText;
+  }else{
+    banner.classList.remove('active');
+    cvCard.style.display='block';
+  }
+}
+
+function resetCVProfile(){
+  sessionStorage.removeItem(SK_PROFILE);
+  cvText=null;
+  renderCVProfileBanner();
+}
+
+function startLoadingSteps(){
+  let idx=1;
+  if(lstepInterval) clearInterval(lstepInterval);
+  document.querySelectorAll('.lstep').forEach(s=>s.classList.remove('active'));
+  document.getElementById('lstep1').classList.add('active');
+  lstepInterval=setInterval(()=>{
+    document.getElementById('lstep'+idx)?.classList.remove('active');
+    idx++;
+    if(idx<=5) document.getElementById('lstep'+idx)?.classList.add('active');
+    if(idx>5) clearInterval(lstepInterval);
+  },1200);
+}
+
+function stopLoadingSteps(){
+  if(lstepInterval) clearInterval(lstepInterval);
+}
+
+function showScreen(screen){
+  currentScreen=screen;
+  ['formView','loading','result','errorBox'].forEach(id=>{
+    const el=document.getElementById(id);
+    if(el) el.style.display='none';
+  });
+  if(screen==='form'){document.getElementById('formView').style.display='block';renderCVProfileBanner();}
+  else if(screen==='result') document.getElementById('result').style.display='block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function getSavedRoles(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY))||[];}catch(e){return[];}}
+
+function saveRole(data){
+  let roles=getSavedRoles();
+  const key=data.job_title||data.role_type;
+  if(roles.some(r=>r.job_title===key)) return;
+  if(roles.length>=5) roles.shift();
+  roles.push({id:Date.now(),job_title:key,role_type:data.role_type,fit_verdict:data.fit_verdict||null,screening_risk:data.screening_risk||null,confidence:data.confidence,saved_at:new Date().toISOString(),full_data:data});
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(roles));
+  renderSaveButton(data);
+}
+
+function renderSaveButton(data){
+  if(currentMode==='cv-only'){document.getElementById('saveWrap').innerHTML='';return;}
+  const roles=getSavedRoles();
+  const key=data.job_title||data.role_type;
+  const saved=roles.some(r=>r.job_title===key);
+  document.getElementById('saveRoleTitle').textContent=data.role_title||data.job_title||'';
+  document.getElementById('saveWrap').innerHTML=saved
+    ?`<div class="saved-status">✓ Saved</div>`
+    :`<button class="save-btn" onclick="saveRole(resultData)">＋ Save</button>`;
+}
+
+function switchCVTab(tab,e){
+  document.querySelectorAll('#cvUploadArea,#cvPasteArea').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.cv-tab').forEach(t=>t.classList.remove('active'));
+  e.target.classList.add('active');
+  document.getElementById(tab==='upload'?'cvUploadArea':'cvPasteArea').classList.add('active');
+}
+
+async function handleFileUpload(input){
+  const file=input.files[0];if(!file)return;
+  const s=document.getElementById('fileStatus');
+  s.style.display='block';s.style.color='var(--text-muted)';s.textContent='Reading CV...';
+  try{
+    const pdf=await pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise;
+    let t='';
+    for(let i=1;i<=pdf.numPages;i++){const pg=await pdf.getPage(i);const ct=await pg.getTextContent();t+=ct.items.map(x=>x.str).join(' ')+'\n';}
+    cvText=t.trim();
+    sessionStorage.setItem('fitfirst_cv',cvText);
+    s.textContent='✓ '+file.name;s.style.color='var(--green)';s.style.fontWeight='600';
+    document.getElementById('uploadLabel').textContent=file.name;
+  }catch(err){s.textContent='Could not read PDF. Use Paste Text instead.';s.style.color='var(--red)';}
+}
+
+async function logEvent(action){
+  try{await fetch(LOG_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({timestamp:new Date().toISOString(),sessionId,product:'da',eventType:action,action,roleType:lastRoleType,jdTitle:resultData?.job_title||null,fitVerdict:resultData?.fit_verdict||null,cvUploaded:!!(cvText),topArchetype:resultData?.role_type||null})});}catch(e){}
+}
+
+function showBlock(id,delay=0){
+  setTimeout(()=>{
+    const el=document.getElementById(id);
+    if(el){el.style.display='block';requestAnimationFrame(()=>requestAnimationFrame(()=>el.classList.add('visible')));}
+  },delay);
+}
+
+// CLEAN renderTopDecision — single source of truth
+function renderTopDecision(data){
+  const hasCv=!!(data.cv_present||data.cv_missing);
+  if(!hasCv) return;
+
+  const decision=data.decision_action||{};
+  const card=document.getElementById('decisionCard');
+  if(!card) return;
+
+  // Primary decision label + colour
+  const primary=decision.primary||'';
+  const primaryEl=document.getElementById('decisionPrimary');
+  primaryEl.textContent=primary;
+  primaryEl.className='decision-primary';
+  if(primary==='Apply'||primary==='Apply confidently') primaryEl.classList.add('apply');
+  else if(primary==='Apply with caution'||primary==='Apply only if strategic') primaryEl.classList.add('caution');
+  else if(primary==='Skip unless urgent') primaryEl.classList.add('skip');
+  else if(primary==='Do not apply') primaryEl.classList.add('no');
+
+  // Secondary line
+  document.getElementById('decisionSecondary').textContent=decision.secondary||'';
+
+  // Body sections
+  const body=document.getElementById('decisionBody');
+  let html='';
+
+  // Assessment
+  if(data.assessment){
+    html+=`<div class="decision-section">
+      <div class="decision-section-label">Assessment</div>
+      <div class="decision-section-body">${data.assessment}</div>
+    </div>`;
+  }
+
+  // Decision drivers
+  if(data.decision_drivers&&data.decision_drivers.length>0){
+    html+=`<div class="decision-section">
+      <div class="decision-section-label">Decision drivers</div>
+      <div class="decision-list">
+        ${data.decision_drivers.map(d=>`<div class="decision-list-item"><div class="decision-list-dot"></div><div>${d.text}</div></div>`).join('')}
+      </div>
+    </div>`;
+  }
+
+  // CV evidence
+  const found=(data.evidence&&data.evidence.found)||[];
+  const missing=(data.evidence&&data.evidence.missing)||[];
+  if(found.length>0||missing.length>0){
+    html+=`<div class="decision-section">
+      <div class="decision-section-label">CV evidence</div>
+      <div class="evidence-cols">
+        <div>
+          <div class="evidence-col-label found">✔ Found in your CV</div>
+          ${found.length>0?found.map(f=>`<div class="evidence-item">${f}</div>`).join(''):'<div class="evidence-item" style="color:var(--text-muted);">None detected</div>'}
+        </div>
+        <div>
+          <div class="evidence-col-label missing">✖ Missing from your CV</div>
+          ${missing.length>0?missing.map(m=>`<div class="evidence-item">${m}</div>`).join(''):'<div class="evidence-item" style="color:var(--text-muted);">No critical gaps — prepare depth examples for interview</div>'}
+        </div>
+      </div>
+    </div>`;
+  }
+
+  // Expected outcome
+  if(data.expected_outcome&&data.expected_outcome.length>0){
+    html+=`<div class="decision-section">
+      <div class="decision-section-label">Expected outcome</div>
+      <div class="decision-list">
+        ${data.expected_outcome.map(o=>`<div class="decision-list-item"><div class="decision-list-dot"></div><div>${o}</div></div>`).join('')}
+      </div>
+    </div>`;
+  }
+
+  // Career impact
+  if(data.career_impact&&data.career_impact.length>0){
+    html+=`<div class="decision-section">
+      <div class="decision-section-label">Career impact</div>
+      <div class="decision-list">
+        ${data.career_impact.map(c=>`<div class="decision-list-item"><div class="decision-list-dot"></div><div>${c}</div></div>`).join('')}
+      </div>
+    </div>`;
+  }
+
+  // Honest assessment (Sonnet output)
+
+  body.innerHTML=html;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>card.classList.add('visible')));
+}
+
+function resetResultBlocks(){
+  const card=document.getElementById('decisionCard');
+  if(card){card.classList.remove('visible');card.style.display='none';}
+  document.querySelectorAll('.rblock').forEach(b=>b.classList.remove('visible'));
+  document.getElementById('cvResultBlocks').style.display='none';
+}
+
+async function analyse(){
+  const jd=document.getElementById('jdInput').value.trim();
+  if(jd.length<100){alert('Please paste a full job description.');return;}
+  const pasted=document.getElementById('cvPasteInput').value.trim();
+  if(pasted) cvText=pasted;
+  const profile=getCapabilityProfile();
+  if(!cvText&&profile&&profile._rawCVText) cvText=profile._rawCVText;
+  currentMode='jd';
+  document.getElementById('formView').style.display='none';
+  document.getElementById('loading').style.display='flex';
+  startLoadingSteps();
+  try{
+    const res=await fetch('/api/classify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jd,cvText:cvText||null,product:'da',mode:'jd'})});
+    const data=await res.json();
+    if(data.error) throw new Error(data.error);
+    if(data.cv_present&&!getCapabilityProfile()){
+      const profileData={strongest_signals:data.cv_present,_rawCVText:cvText};
+      sessionStorage.setItem(SK_PROFILE,JSON.stringify(profileData));
+    }
+    stopLoadingSteps();
+    document.getElementById('loading').style.display='none';
+    resultData=data;
+    resetResultBlocks();
+    showScreen('result');
+    showResult(data);
+  }catch(err){
+    stopLoadingSteps();
+    document.getElementById('loading').style.display='none';
+    document.getElementById('formView').style.display='block';
+    document.getElementById('errorBox').style.display='block';
+    document.getElementById('errorMsg').textContent=err.message||'Something went wrong.';
+  }
+}
+
+async function analyseCVOnly(cv){
+  currentMode='cv-only';
+  document.getElementById('formView').style.display='none';
+  document.getElementById('loading').style.display='flex';
+  startLoadingSteps();
+  try{
+    const res=await fetch('/api/classify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({cvText:cv,product:'da',mode:'cv-only'})});
+    const data=await res.json();
+    if(data.error) throw new Error(data.error);
+    stopLoadingSteps();
+    document.getElementById('loading').style.display='none';
+    resultData=data;
+    resetResultBlocks();
+    showScreen('result');
+    showCVProfile(data);
+  }catch(err){
+    stopLoadingSteps();
+    document.getElementById('loading').style.display='none';
+    document.getElementById('formView').style.display='block';
+    document.getElementById('errorBox').style.display='block';
+    document.getElementById('errorMsg').textContent=err.message||'Something went wrong.';
+  }
+}
+
+async function analyseFromProfile(){
+  const jd=document.getElementById('jdPromptInput').value.trim();
+  if(jd.length<100){alert('Please paste a full job description.');return;}
+  currentMode='jd';
+  document.getElementById('result').style.display='none';
+  document.getElementById('loading').style.display='flex';
+  startLoadingSteps();
+  try{
+    const res=await fetch('/api/classify',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({jd,cvText:cvText||null,product:'da',mode:'jd'})});
+    const data=await res.json();
+    if(data.error) throw new Error(data.error);
+    stopLoadingSteps();
+    document.getElementById('loading').style.display='none';
+    resultData=data;
+    resetResultBlocks();
+    showScreen('result');
+    showResult(data);
+  }catch(err){
+    stopLoadingSteps();
+    document.getElementById('loading').style.display='none';
+    document.getElementById('errorBox').style.display='block';
+    document.getElementById('errorMsg').textContent=err.message||'Something went wrong.';
+  }
+}
+
+function showResult(data){
+  lastRoleType=data.role_type;
+  logEvent('analyse');
+  renderSaveButton(data);
+  const card=document.getElementById('decisionCard');
+  if(card) card.style.display='block';
+  renderTopDecision(data);
+}
+
+function showCVProfile(data){
+  logEvent('cv-profile');
+  document.getElementById('cvResultBlocks').style.display='block';
+  document.getElementById('saveRoleTitle').textContent='Your DA Profile';
+  document.getElementById('saveWrap').innerHTML='';
+  const conf=data.profile_confidence||'Medium';
+  const confEl=document.getElementById('profileConfidence');
+  confEl.textContent=conf;confEl.className='cbadge '+conf;
+  document.getElementById('profileType').textContent=data.profile_type||'—';
+  document.getElementById('profileSummary').textContent=data.profile_summary||'';
+  if(data.dimension_profile){
+    const dims=[
+      {k:'businessInsight',l:'Business Insight'},
+      {k:'sqlQuerying',l:'SQL / Querying'},
+      {k:'dataVisualisation',l:'Data Visualisation'},
+      {k:'statisticsAnalysis',l:'Statistics & Analysis'},
+      {k:'dataEngineeringAwareness',l:'Data Engineering'}
+    ];
+    document.getElementById('profileDimensions').innerHTML=dims.map(d=>`<div class="dim-row"><span class="dim-name">${d.l}</span><div class="dim-track"><div class="dim-fill" style="width:${((data.dimension_profile[d.k]||0)/5)*100}%"></div></div><span class="dim-val">${data.dimension_profile[d.k]||0}/5</span></div>`).join('');
+  }
+  const location='UK';
+  document.getElementById('recommendedRoles').innerHTML=(data.recommended_roles||[]).map(r=>`<div class="rec-role"><div class="rec-role-left"><div class="rec-role-title"><span class="rec-role-ico">→</span>${r}</div><div class="rec-role-links"><span class="rec-role-link-label">Explore jobs:</span><a class="rec-role-link" href="https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent(r+' '+location)}" target="_blank" rel="noopener">LinkedIn</a><a class="rec-role-link" href="https://www.indeed.com/jobs?q=${encodeURIComponent(r+' '+location)}" target="_blank" rel="noopener">Indeed</a></div></div></div>`).join('');
+  document.getElementById('strongestSignals').innerHTML=(data.strongest_signals||[]).map(s=>`<div class="signal-row"><span class="signal-ico-ok">✓</span><span>${s}</span></div>`).join('');
+  document.getElementById('signalGaps').innerHTML=(data.signal_gaps||[]).map(g=>`<div class="signal-row"><span class="signal-ico-bad">✗</span><div><div>${g.signal||g}</div>${g.why?`<div class="signal-why">${g.why}</div>`:''}</div>${g.impact?`<span class="imp ${g.impact}">${g.impact}</span>`:''}</div>`).join('');
+  document.getElementById('cvHonestText').textContent=data.honest_assessment||'';
+  document.getElementById('nextStepsText').textContent=data.next_steps||'';
+  let delay=0;
+  ['block-profile','block-recommended','block-strengths','block-gaps','block-cv-honest','block-jd-prompt'].forEach(id=>{showBlock(id,delay);delay+=120;});
+}
+
+function reset(){
+  cvText=null;resultData=null;currentMode='jd';
+  document.getElementById('cvFile').value='';
+  document.getElementById('fileStatus').style.display='none';
+  document.getElementById('uploadLabel').textContent='Choose PDF file';
+  document.getElementById('cvPasteInput').value='';
+  document.getElementById('jdInput').value='';
+  document.getElementById('errorBox').style.display='none';
+  showScreen('form');
+}
+
+renderCVProfileBanner();
+document.getElementById('formView').style.display='block';
+
+(function(){
+  try{
+    const savedId=sessionStorage.getItem('fitfirst_load_saved_id');
+    const savedKey=sessionStorage.getItem('fitfirst_load_saved_key');
+    if(savedId&&savedKey){
+      sessionStorage.removeItem('fitfirst_load_saved_id');
+      sessionStorage.removeItem('fitfirst_load_saved_key');
+      const roles=JSON.parse(localStorage.getItem(savedKey))||[];
+      const entry=roles.find(r=>String(r.id)===String(savedId));
+      if(entry){resultData=entry.full_data;resetResultBlocks();showScreen('result');showResult(entry.full_data);return;}
+    }
+    const jd=sessionStorage.getItem('fitfirst_jd');
+    const cv=sessionStorage.getItem('fitfirst_cv');
+    const mode=sessionStorage.getItem('fitfirst_mode');
+    sessionStorage.removeItem('fitfirst_jd');
+    sessionStorage.removeItem('fitfirst_cv');
+    sessionStorage.removeItem('fitfirst_mode');
+    sessionStorage.removeItem('fitfirst_product');
+    if(mode==='cv-only'&&cv){
+      cvText=cv;
+      document.getElementById('formView').style.display='none';
+      analyseCVOnly(cv);
+    } else if(jd){
+      document.getElementById('formView').style.display='none';
+      document.getElementById('jdInput').value=jd;
+      if(cv) cvText=cv;
+      analyse();
+    } else {
+      document.getElementById('formView').style.display='block';
+    }
+  }catch(e){document.getElementById('formView').style.display='block';}
+})();
+</script>
+<script defer src="/_vercel/insights/script.js"></script>
+</body>
+</html>

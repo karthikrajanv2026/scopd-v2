@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Scop'd — Decode Job Descriptions &amp; See Your CV Gaps Before You Apply</title>
+<meta name="description" content="Paste any job description. Scop'd reveals the recruiter signals and shows exactly where your CV falls short — before you apply.">
+<meta property="og:title" content="Scop'd — See what recruiters actually evaluate">
+<meta property="og:description" content="Paste any job description. Scop'd decodes hiring signals and shows your CV gaps before you apply.">
+<meta property="og:url" content="https://scopd.online">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Scop'd — Decode hiring signals">
+<meta name="twitter:description" content="See what recruiters actually filter for. Free. No signup.">
+<link rel="canonical" href="https://scopd.online/">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://scopd.online/#organization",
+      "name": "Scop'd",
+      "url": "https://scopd.online",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://scopd.online/lumax-outlook.png"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://scopd.online/#website",
+      "url": "https://scopd.online",
+      "name": "Scop'd",
+      "publisher": { "@id": "https://scopd.online/#organization" }
+    },
+    {
+      "@type": "SoftwareApplication",
+      "name": "Scop'd — Role Intelligence",
+      "url": "https://scopd.online",
+      "applicationCategory": "BusinessApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "GBP"
+      },
+      "description": "Paste any job description. Scop'd decodes recruiter hiring signals and shows exactly where your CV falls short — before you apply.",
+      "featureList": [
+        "Job description signal analysis",
+        "CV gap identification",
+        "Business Analyst role intelligence",
+        "Data Analyst role intelligence",
+        "Role fit scoring"
+      ]
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Why aren't you getting interview calls?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Most CVs are filtered out before a human reads them. Recruiters scan for specific signals — role archetypes, dimension scores, and keyword patterns — that most candidates don't know about. Scop'd reveals these hidden signals so you can fix your CV before you apply."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does Scop'd actually do?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Scop'd analyses job descriptions to extract the recruiter signals hidden inside them. It then compares your CV against those signals and shows exactly which ones are missing — giving you a clear picture of your screening risk before you apply."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Scop'd free to use?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes. Scop'd is completely free to use and requires no signup or account creation. Just paste a job description and get your analysis in about 5 seconds."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What types of roles does Scop'd support?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Scop'd currently supports Business Analyst (BA) and Data Analyst (DA) roles, with specialised intelligence for each role type."
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+body{
+margin:0;
+font-family:Inter;
+color:#F0F0F8;
+background:
+radial-gradient(circle at 20% 20%, rgba(99,102,241,0.15), transparent 40%),
+#0C0C10;
+}
+.container{
+max-width:1100px;
+margin:auto;
+padding:0 20px;
+}
+header{
+position:fixed;
+top:0;
+left:0;
+right:0;
+height:64px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 30px;
+background:#0C0C10dd;
+backdrop-filter:blur(10px);
+border-bottom:1px solid rgba(255,255,255,0.08);
+transition:all .25s;
+z-index:100;
+}
+.logo{
+font-family:"IBM Plex Serif";
+font-size:20px;
+font-weight:600;
+display:flex;
+align-items:center;
+gap:8px;
+}
+.logo-dot{
+width:7px;
+height:7px;
+background:#6366F1;
+border-radius:50%;
+box-shadow:0 0 8px #6366F1;
+}
+button{
+background:linear-gradient(135deg,#6366F1,#8B5CF6);
+border:none;
+padding:14px 26px;
+border-radius:10px;
+color:white;
+font-weight:600;
+cursor:pointer;
+transition:all .25s;
+font-family:Inter;
+font-size:15px;
+}
+button:hover{
+transform:translateY(-2px);
+box-shadow:0 12px 40px rgba(99,102,241,.5);
+}
+.hero{
+display:grid;
+grid-template-columns:1.1fr 1fr;
+gap:80px;
+align-items:center;
+padding-top:160px;
+padding-bottom:120px;
+position:relative;
+}
+.hero h1{
+font-family:"IBM Plex Serif";
+font-size:64px;
+line-height:1.05;
+letter-spacing:-1px;
+margin:0 0 20px;
+}
+.hero p{
+font-size:18px;
+color:#9898B0;
+margin-bottom:30px;
+}
+.hero::after{
+content:"";
+position:absolute;
+right:0;
+top:80px;
+width:500px;
+height:500px;
+background:radial-gradient(circle,
+rgba(99,102,241,0.35),
+transparent 60%);
+filter:blur(80px);
+z-index:-1;
+}
+.product-frame{
+background:#13131A;
+border-radius:16px;
+padding:14px;
+border:1px solid rgba(255,255,255,0.08);
+box-shadow:
+0 30px 80px rgba(0,0,0,0.6),
+0 0 0 1px rgba(255,255,255,0.03) inset;
+transition:transform .3s;
+}
+.product-frame:hover{
+transform:translateY(-6px);
+}
+.window-bar{
+display:flex;
+gap:6px;
+margin-bottom:10px;
+}
+.window-bar span{
+width:10px;
+height:10px;
+border-radius:50%;
+}
+.window-bar span:nth-child(1){background:#FF5F56;}
+.window-bar span:nth-child(2){background:#FFBD2E;}
+.window-bar span:nth-child(3){background:#27C93F;}
+.product-frame img{
+width:100%;
+border-radius:10px;
+display:block;
+}
+section{
+padding:120px 0;
+}
+.section-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:80px;
+align-items:center;
+}
+.section-title{
+font-family:"IBM Plex Serif";
+font-size:38px;
+margin-bottom:20px;
+line-height:1.15;
+}
+.section-text{
+color:#9898B0;
+font-size:18px;
+line-height:1.6;
+}
+.cards{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:30px;
+margin-top:40px;
+}
+.card{
+background:#13131A;
+padding:30px;
+border-radius:12px;
+border:1px solid rgba(255,255,255,0.08);
+transition:all .2s;
+}
+.card:hover{
+transform:translateY(-4px);
+box-shadow:0 20px 50px rgba(0,0,0,0.4);
+border-color:rgba(99,102,241,0.3);
+}
+.card h3{
+font-size:17px;
+font-weight:600;
+margin-bottom:10px;
+}
+.card p{
+color:#9898B0;
+font-size:14px;
+line-height:1.6;
+}
+.card-num{
+font-size:11px;
+font-weight:700;
+letter-spacing:0.08em;
+text-transform:uppercase;
+color:#6366F1;
+margin-bottom:12px;
+}
+.section-divider{
+border:none;
+border-top:1px solid rgba(255,255,255,0.06);
+margin:0;
+}
+.signal-dot{
+position:absolute;
+width:6px;
+height:6px;
+background:#6366F1;
+border-radius:50%;
+animation:float 6s infinite ease-in-out;
+}
+.dot1{top:120px;left:55%;}
+.dot2{top:200px;left:60%;}
+.dot3{top:300px;left:50%;}
+@keyframes float{
+0%{transform:translateY(0)}
+50%{transform:translateY(-20px)}
+100%{transform:translateY(0)}
+}
+.reveal{
+opacity:0;
+transform:translateY(40px);
+transition:all .45s cubic-bezier(.4,0,.2,1);
+}
+.reveal.visible{
+opacity:1;
+transform:translateY(0);
+}
+footer{
+text-align:center;
+padding:120px 20px;
+border-top:1px solid rgba(255,255,255,0.08);
+}
+footer h2{
+font-family:"IBM Plex Serif";
+font-size:42px;
+margin-bottom:20px;
+}
+footer p{
+color:#9898B0;
+margin-bottom:30px;
+font-size:17px;
+}
+.trust{
+margin-top:12px;
+font-size:12px;
+color:#52526A;
+}
+.trust span{margin:0 6px;}
+.faq-section{padding:120px 0;}
+.faq-section h2{font-family:"IBM Plex Serif";font-size:38px;margin-bottom:48px;text-align:center;}
+.faq-list{max-width:780px;margin:0 auto;display:flex;flex-direction:column;gap:28px;}
+.faq-item{}
+.faq-item h3{font-size:18px;font-weight:600;margin:0 0 12px;color:#F0F0F8;}
+.faq-item p{color:#9898B0;font-size:16px;line-height:1.7;margin:0;}
+@media(max-width:900px){
+.hero{grid-template-columns:1fr;gap:40px;padding-top:120px;}
+.hero h1{font-size:40px;}
+.section-grid{grid-template-columns:1fr;gap:40px;}
+.cards{grid-template-columns:1fr;}
+}
+</style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4K64XTSGGH"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-4K64XTSGGH');
+</script>
+</head>
+<body>
+
+<header>
+  <div class="logo">Scop'd <div class="logo-dot"></div></div>
+  <button onclick="location.href='/da/'">Decode a Job Description</button>
+</header>
+
+<div class="container">
+
+  <!-- HERO -->
+  <div class="hero reveal">
+    <div>
+      <h1>Why aren't you getting interview calls?</h1>
+      <p>
+        Most job seekers apply to dozens of roles and hear nothing back. The problem is rarely the CV itself — it's that your CV is being evaluated against a set of hiring signals you can't see. Recruiters don't read CVs line by line. They scan for specific indicators: role archetypes, dimension scores, keyword clusters, and experience patterns that match their internal shortlist criteria. These signals are buried inside the job description, invisible to the untrained eye. Scop'd decodes them. Paste any job description and within seconds you'll see the recruiter's signal map — what role archetype they're actually hiring for, which dimensions they're weighting most heavily, and precisely which signals your CV is missing. Fix those gaps before you apply and dramatically improve your screening odds.
+      </p>
+      <button onclick="location.href='/da/'">Decode Hiring Signals →</button>
+      <div class="trust">Takes ~5 seconds<span>•</span>No signup required<span>•</span>Free to use</div>
+    </div>
+    <div class="product-frame">
+      <div class="window-bar">
+        <span></span><span></span><span></span>
+      </div>
+      <img src="lumax-outlook.png" alt="Scop'd analysis result showing a verdict of Apply with Low screening risk, with matched recruiter signals and dimension scores for Analytical, Delivery, Decision, and Stakeholder axes">
+    </div>
+    <div class="signal-dot dot1"></div>
+    <div class="signal-dot dot2"></div>
+    <div class="signal-dot dot3"></div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- SECTION 1 -->
+  <section class="reveal">
+    <div class="section-grid">
+      <div>
+        <h2 class="section-title">
+          See what recruiters actually filter for
+        </h2>
+        <p class="section-text">
+          Every job description contains two layers of information. The surface layer is what the hiring manager wrote: responsibilities, qualifications, and requirements. Beneath that is the recruiter's signal layer — the specific patterns, terminology, and experience markers that their shortlisting process is calibrated to detect. Scop'd operates on the second layer. When you paste a job description, Scop'd classifies the role into one of several archetypes (for Business Analyst roles: Requirements BA, Process BA, Delivery BA, or Transformation BA), scores the four key hiring dimensions — Analytical, Delivery, Decision, and Stakeholder — and extracts every individual signal the recruiter is filtering for. The result is a complete picture of what the recruiter is actually evaluating, not just what they chose to write in the job ad.
+        </p>
+      </div>
+      <div class="product-frame">
+        <div class="window-bar">
+          <span></span><span></span><span></span>
+        </div>
+        <img src="lumax-signals.png" alt="Scop'd recruiter signal breakdown for a Delivery BA role, showing extracted signal chips across Analytical, Delivery, Decision, and Stakeholder dimensions with role archetype classification">
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- SECTION 2 -->
+  <section class="reveal">
+    <div class="section-grid">
+      <div class="product-frame">
+        <div class="window-bar">
+          <span></span><span></span><span></span>
+        </div>
+        <img src="lumax-cv-match.png" alt="Scop'd CV match analysis showing found signals highlighted in green and missing signals highlighted in red, with a screening risk score indicating gaps between the candidate's CV and the role's recruiter signal requirements">
+      </div>
+      <div>
+        <h2 class="section-title">
+          Know exactly why your CV gets rejected
+        </h2>
+        <p class="section-text">
+          The gap between a strong CV and an interview call is almost always a specific set of missing signals. A recruiter running a Business Analyst search isn't asking "is this a good candidate?" — they're asking "does this CV show experience with requirements elicitation, stakeholder management, and process documentation?" If those signals don't appear in the right context, the CV gets filtered before a human ever reads it. Scop'd closes this information gap. After decoding the job description's signal map, Scop'd compares your uploaded CV against each signal individually and shows you a matched versus missing breakdown. You can see at a glance which signals your CV already demonstrates, which ones are absent, and which gaps represent the highest screening risk for the specific role you're targeting.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="section-divider">
+
+  <!-- HOW IT WORKS -->
+  <section class="reveal">
+    <h2 class="section-title" style="text-align:center;margin-bottom:12px;">How Scop'd Works</h2>
+    <p style="text-align:center;color:#9898B0;font-size:17px;margin-bottom:0;">Three steps. Five seconds. Zero guesswork.</p>
+    <div class="cards">
+      <div class="card">
+        <div class="card-num">Step 01</div>
+        <h3>Paste a Job Description</h3>
+        <p>Copy the full job description from LinkedIn, Indeed, or any job board and paste it into Scop'd.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">Step 02</div>
+        <h3>Decode Recruiter Signals</h3>
+        <p>Scop'd classifies the role, extracts every hiring signal, and scores the dimensions recruiters evaluate.</p>
+      </div>
+      <div class="card">
+        <div class="card-num">Step 03</div>
+        <h3>See Your Screening Risk</h3>
+        <p>Upload your CV to see exactly which signals you match — and which gaps are getting you filtered out.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- FAQ SECTION -->
+<div class="container">
+  <hr class="section-divider">
+  <section class="faq-section reveal">
+    <h2>Frequently Asked Questions</h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <h3>Why aren't I getting interview calls despite applying to many roles?</h3>
+        <p>Most CVs are filtered out before a human ever reads them. Recruiters and applicant tracking systems scan for specific signals — role archetypes, dimension scores, and keyword patterns — that most candidates don't know exist. A CV can be well-written and genuinely qualified, yet still fail to pass the initial filter because it doesn't surface the right signals in the right context. Scop'd reveals the exact signals each job description is filtering for, so you can identify the gaps in your CV before you apply rather than after you've been rejected. Understanding the recruiter's signal layer is the single most effective change most job seekers can make to improve their interview call rate.</p>
+      </div>
+      <div class="faq-item">
+        <h3>What does Scop'd actually do when it analyses a job description?</h3>
+        <p>Scop'd analyses the text of a job description to extract the recruiter signals embedded within it. It first classifies the role into an archetype — for Business Analyst roles this means identifying whether the posting is for a Requirements BA, Process BA, Delivery BA, or Transformation BA, each of which has a distinct signal profile. It then scores four key hiring dimensions: Analytical (data and insight focus), Delivery (project and agile focus), Decision (stakeholder influence), and Stakeholder (communication and engagement). Finally, it extracts each individual signal and, if you upload your CV, shows you which signals your CV matches and which are missing — along with a screening risk verdict of Apply, Review, or Caution for that specific role.</p>
+      </div>
+      <div class="faq-item">
+        <h3>Is Scop'd free to use?</h3>
+        <p>Yes. Scop'd is completely free to use and requires no signup, no account creation, and no payment details. You paste a job description, optionally upload your CV, and receive your full signal analysis in approximately 5 seconds. There are no usage limits, no watermarked results, and no premium tier required to access any part of the analysis. The BA Intelligence and DA Intelligence tools are also fully free.</p>
+      </div>
+      <div class="faq-item">
+        <h3>What types of roles does Scop'd support?</h3>
+        <p>Scop'd currently supports Business Analyst and Data Analyst roles, with a specialist intelligence engine for each role type. The BA Intelligence tool recognises four Business Analyst archetypes and is calibrated to the specific signal patterns used by BA recruiters in the market. The DA Intelligence tool analyses SQL depth, tool stack requirements (Power BI, Tableau, Python, etc.), and analytics domain signals relevant to Data Analyst shortlisting. The general tool at scopd.online/da/ can analyse any job description and extract signals, though the role-specific tools provide deeper archetype classification for BA and DA postings.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER CTA -->
+<footer>
+  <h2>Stop applying blindly.</h2>
+  <p>
+    Decode the next job description before you apply.<br>
+    Know your screening risk. Fix the gaps. Get the callback.
+  </p>
+  <button onclick="location.href='/da/'">Try Scop'd Free →</button>
+  <div class="trust" style="margin-top:16px;">No signup required</div>
+</footer>
+
+<script>
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting){
+      entry.target.classList.add("visible");
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll(".reveal").forEach(el => {
+  observer.observe(el);
+});
+
+window.addEventListener("scroll", () => {
+  if(window.scrollY > 20){
+    document.querySelector("header").style.height = "56px";
+  } else {
+    document.querySelector("header").style.height = "64px";
+  }
+});
+</script>
+
+</body>
+</html>

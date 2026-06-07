@@ -1,0 +1,146 @@
+// Scop'd v2 — capability-first architecture
+
+export default async function handler(req, res) {
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+
+  const { jd, cvText, goals } = req.body;
+  if (!jd) return res.status(400).json({ error: 'No job description provided.' });
+
+  try {
+    const Anthropic = (await import('@anthropic-ai/sdk')).default;
+    const client = new Anthropic();
+
+    const role = await extractRole(client, jd);
+    const candidate = cvText ? await extractCandidate(client, cvText) : null;
+    const fit = candidate ? await evaluateFit(client, role, candidate, goals || null) : null;
+
+    return res.status(200).json({
+      role,
+      candidate,
+      fit
+    });
+
+  } catch (err) {
+    console.error('classify error:', err);
+    return res.status(200).json({ error: true, message: err.message });
+  }
+}
+
+async function extractRole(client, jdText) {
+  const msg = await client.messages.create({
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: 1000,
+    temperature: 0,
+    messages: [{
+      role: 'user',
+      content: `Extract structured information from this job description.
+
+Return ONLY valid JSON in this exact format:
+{
+  "title": "job title",
+  "skills": ["skill1", "skill2"],
+  "responsibilities": ["responsibility1", "responsibility2"],
+  "expectations": ["expectation1", "expectation2"],
+  "context": {
+    "industry": "industry name",
+    "company_size": "startup|mid-size|enterprise|unknown",
+    "team_structure": "agile|waterfall|unknown"
+  }
+}
+
+Skills = tools and technologies explicitly mentioned.
+Responsibilities = what the person will actually do day to day.
+Expectations = implied behaviours and traits (ownership, autonomy, communication style, seniority signals).
+Extract 3-8 items per array. Return ONLY JSON, no explanation.
+
+JOB DESCRIPTION:
+${jdText}`
+    }]
+  });
+
+  const text = msg.content[0].text;
+  const start = text.indexOf('{');
+  const end = text.lastIndexOf('}');
+  return JSON.parse(text.slice(start, end + 1));
+}
+
+async function extractCandidate(client, cvText) {
+  const msg = await client.messages.create({
+    model: 'claude-haiku-4-5-20251001',
+    max_tokens: 1000,
+    temperature: 0,
+    messages: [{
+      role: 'user',
+      content: `Extract structured information from this CV.
+
+Return ONLY valid JSON in this exact format:
+{
+  "skills": ["skill1", "skill2"],
+  "experience": [
+    {
+      "title": "job title",
+      "duration_months": 12,
+      "domain": "industry or domain",
+      "responsibilities": ["did this", "did that"]
+    }
+  ],
+  "capabilities": ["capability1", "capability2"]
+}
+
+Skills = tools and technologies explicitly mentioned.
+Experience = each role held, with duration and domain.
+Capabilities = what this person can actually do based on their history.
+Extract 3-8 items per array. Return ONLY JSON, no explanation.
+
+CV:
+${cvText}`
+    }]
+  });
+
+  const text = msg.content[0].text;
+  const start = text.indexOf('{');
+  const end = text.lastIndexOf('}');
+  return JSON.parse(text.slice(start, end + 1));
+}
+
+async function evaluateFit(client, role, candidate, goals) {
+  const msg = await client.messages.create({
+    model: 'claude-sonnet-4-20250514',
+    max_tokens: 1000,
+    messages: [{
+      role: 'user',
+      content: `You are a senior recruiter giving honest, direct feedback.
+
+Role requires:
+Skills: ${JSON.stringify(role.skills)}
+Responsibilities: ${JSON.stringify(role.responsibilities)}
+Expectations: ${JSON.stringify(role.expectations)}
+
+Candidate has:
+Skills: ${JSON.stringify(candidate.skills)}
+Capabilities: ${JSON.stringify(candidate.capabilities)}
+
+Return ONLY valid JSON in this exact format:
+{
+  "capability_fit": {
+    "verdict": "strong|moderate|weak",
+    "summary": "one sentence honest assessment",
+    "matched": ["thing1", "thing2"],
+    "gaps": ["gap1", "gap2"]
+  },
+  "goal_fit": null,
+  "practical_fit": null,
+  "screening_priorities": ["what recruiter will look for first", "second priority"],
+  "hidden_expectations": ["unstated expectation1", "unstated expectation2"]
+}
+
+Be specific. Name actual skills and responsibilities. Do not be generic.
+Return ONLY JSON.`
+    }]
+  });
+
+  const text = msg.content[0].text;
+  const start = text.indexOf('{');
+  const end = text.lastIndexOf('}');
+  return JSON.parse(text.slice(start, end + 1));
+}
