@@ -4,487 +4,935 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Scop'd — Should you apply?</title>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<meta name="description" content="Paste any job description. See what matters — and where you stand.">
+<link rel="canonical" href="https://scopd.online/da/">
 <script src="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-:root{
-  --bg:#f5f7f9;
-  --surface:#ffffff;
-  --border:#e5e9eb;
-  --primary:#4647d3;
-  --primary-soft:rgba(70,71,211,0.08);
-  --text:#1a1d1e;
-  --text-soft:#595c5e;
-  --text-muted:#9a9d9f;
-  --green:#16a34a;
-  --green-soft:#f0fdf4;
-  --green-border:#bbf7d0;
-  --amber:#b45309;
-  --amber-soft:#fffbeb;
-  --amber-border:#fde68a;
-  --red:#dc2626;
-  --red-soft:#fef2f2;
-  --red-border:#fecaca;
-  --radius:12px;
+/* ── Reset & base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background: #f5f7f9;
+  color: #2c2f31;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
-body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;}
+a { text-decoration: none; color: inherit; }
+button { font-family: inherit; cursor: pointer; border: none; background: none; }
+textarea { font-family: inherit; }
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;background:rgba(255,255,255,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 32px;}
-.nav-logo{font-size:20px;font-weight:800;color:var(--primary);letter-spacing:-0.5px;display:flex;align-items:center;gap:6px;}
-.nav-dot{width:6px;height:6px;background:var(--primary);border-radius:50%;animation:pulse 2s infinite;}
-@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
-.nav-links{display:flex;gap:0;}
-.nav-link{padding:8px 20px;font-size:14px;font-weight:600;color:var(--text-soft);text-decoration:none;border-bottom:2px solid transparent;transition:all 0.15s;}
-.nav-link.active{color:var(--primary);border-bottom-color:var(--primary);}
-.nav-link:hover{color:var(--primary);}
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #c7c9ff; border-radius: 6px; }
 
-/* FORM */
-#formView{padding:100px 24px 80px;max-width:680px;margin:0 auto;}
-.form-hero{margin-bottom:32px;}
-.form-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:var(--primary-soft);border-radius:100px;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--primary);margin-bottom:16px;}
-.form-h1{font-size:40px;font-weight:800;letter-spacing:-1px;line-height:1.1;color:var(--text);margin-bottom:12px;}
-.form-sub{font-size:16px;color:var(--text-soft);line-height:1.6;}
-.form-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;box-shadow:0 4px 24px rgba(0,0,0,0.06);}
-.flabel{display:block;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;}
-textarea{width:100%;padding:14px;border:1px solid var(--border);border-radius:var(--radius);font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--text);background:var(--bg);resize:vertical;outline:none;transition:border-color 0.15s;}
-textarea:focus{border-color:var(--primary);}
-textarea::placeholder{color:var(--text-muted);}
-.cv-section{margin-top:16px;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
-.cv-header{padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);}
-.cv-title{font-size:13px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:8px;}
-.opt-tag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;background:var(--amber-soft);color:var(--amber);border:1px solid var(--amber-border);}
-.cv-tabs{display:flex;border-bottom:1px solid var(--border);}
-.cv-tab{flex:1;padding:10px;font-size:12px;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif;border:none;background:none;cursor:pointer;color:var(--text-muted);border-bottom:2px solid transparent;transition:all 0.15s;}
-.cv-tab.active{color:var(--primary);border-bottom-color:var(--primary);background:var(--primary-soft);}
-.cv-pane{display:none;padding:14px 16px;}
-.cv-pane.active{display:block;}
-.upload-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;font-size:13px;font-weight:500;color:var(--text-soft);cursor:pointer;transition:all 0.15s;}
-.upload-btn:hover{border-color:var(--primary);color:var(--primary);}
-#fileStatus{display:none;font-size:12px;font-weight:600;margin-top:8px;}
-.cta{width:100%;margin-top:20px;padding:15px;background:var(--primary);color:white;border:none;border-radius:var(--radius);font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;}
-.cta:hover{background:#3536b8;transform:translateY(-1px);}
-.trust{text-align:center;margin-top:10px;font-size:11px;color:var(--text-muted);}
+/* ══════════════════════════════
+   NAV
+══════════════════════════════ */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  height: 68px;
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(70,71,211,0.10);
+  display: flex;
+  align-items: center;
+}
+.nav-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-logo {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: #4647d3;
+}
+.nav-links {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+.nav-link {
+  font-size: 14px;
+  font-weight: 600;
+  color: #595c5e;
+  padding-bottom: 2px;
+  transition: color 0.15s;
+}
+.nav-link:hover { color: #4647d3; }
+.nav-link.active {
+  color: #4647d3;
+  border-bottom: 2px solid #4647d3;
+  padding-bottom: 0;
+}
 
-/* LOADING */
-#loading{display:none;min-height:100vh;flex-direction:column;align-items:center;justify-content:center;gap:0;padding:24px;}
-.loading-h{font-size:28px;font-weight:800;letter-spacing:-0.5px;margin-bottom:24px;}
-.loading-bar-wrap{width:480px;max-width:100%;height:4px;background:var(--border);border-radius:4px;overflow:hidden;margin-bottom:32px;}
-.loading-bar{height:100%;width:0;background:var(--primary);animation:loadbar 6s forwards;}
-@keyframes loadbar{to{width:100%;}}
-.loading-steps{width:480px;max-width:100%;display:flex;flex-direction:column;gap:10px;}
-.lstep{padding:12px 16px;border-radius:var(--radius);border:1px solid var(--border);font-size:13px;color:var(--text-muted);background:var(--surface);transition:all 0.3s;}
-.lstep.active{border-color:var(--primary);color:var(--text);background:var(--primary-soft);font-weight:600;}
+/* ══════════════════════════════
+   SCREENS
+══════════════════════════════ */
+.screen { display: none; }
+.screen.visible { display: block; }
 
-/* ERROR */
-#errorBox{display:none;padding:100px 24px;max-width:600px;margin:0 auto;}
-.err-card{padding:16px;background:var(--red-soft);border:1px solid var(--red-border);border-radius:var(--radius);font-size:14px;color:var(--red);}
+/* ══════════════════════════════
+   FORM VIEW
+══════════════════════════════ */
+#formView {
+  padding-top: 108px;
+  padding-bottom: 80px;
+  max-width: 720px;
+  margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+.form-heading {
+  margin-bottom: 36px;
+}
+.form-heading h1 {
+  font-size: clamp(36px, 6vw, 56px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.08;
+  color: #2c2f31;
+  margin-bottom: 12px;
+}
+.form-heading p {
+  font-size: 18px;
+  color: #595c5e;
+  line-height: 1.5;
+}
+.form-card {
+  background: rgba(255,255,255,0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(70,71,211,0.12);
+  border-radius: 20px;
+  padding: 40px;
+  box-shadow: 0 24px 60px rgba(70,71,211,0.07);
+}
+.field-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: #595c5e;
+  margin-bottom: 8px;
+}
+.jd-textarea {
+  width: 100%;
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(70,71,211,0.20);
+  border-radius: 10px;
+  padding: 14px 16px;
+  font-size: 14px;
+  color: #2c2f31;
+  resize: vertical;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  outline: none;
+}
+.jd-textarea::placeholder { color: #adb0b2; }
+.jd-textarea:focus {
+  border-color: rgba(70,71,211,0.45);
+  box-shadow: 0 0 0 3px rgba(70,71,211,0.10);
+}
 
-/* RESULT */
-#result{display:none;padding:80px 24px 80px;max-width:800px;margin:0 auto;}
-.result-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;padding-bottom:16px;border-bottom:1px solid var(--border);}
-.result-role{font-size:13px;font-weight:600;color:var(--text-soft);}
-.save-btn{padding:7px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:12px;font-weight:600;color:var(--primary);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.15s;}
-.save-btn:hover{border-color:var(--primary);background:var(--primary-soft);}
+/* CV optional section */
+.cv-section {
+  margin-top: 24px;
+}
+.cv-section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.optional-badge {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #92650a;
+  background: #fff8e6;
+  border: 1px solid #fcd34d;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+.cv-box {
+  background: rgba(255,255,255,0.6);
+  border: 1px solid rgba(70,71,211,0.15);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.cv-tabs {
+  display: flex;
+  border-bottom: 1px solid rgba(70,71,211,0.10);
+}
+.cv-tab {
+  flex: 1;
+  padding: 10px 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #595c5e;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s, background 0.15s;
+  margin-bottom: -1px;
+}
+.cv-tab.active {
+  color: #4647d3;
+  border-bottom-color: #4647d3;
+  background: rgba(70,71,211,0.04);
+}
+.cv-tab-panel { display: none; }
+.cv-tab-panel.active { display: block; }
+.cv-upload-panel { padding: 16px 20px; }
+.upload-btn-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #eef1f3;
+  border: 1px solid rgba(70,71,211,0.20);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #595c5e;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+.upload-btn-label:hover {
+  border-color: #4647d3;
+  color: #4647d3;
+  background: rgba(70,71,211,0.05);
+}
+.upload-icon {
+  font-size: 16px;
+  line-height: 1;
+}
+#fileStatus {
+  display: none;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 8px;
+  color: #16a34a;
+}
+.cv-paste-textarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 16px 20px;
+  font-size: 14px;
+  color: #2c2f31;
+  resize: vertical;
+  min-height: 110px;
+}
+.cv-paste-textarea::placeholder { color: #adb0b2; }
 
-/* VERDICT */
-.verdict-section{margin-bottom:32px;}
-.verdict-label{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;}
-.verdict-value{font-size:48px;font-weight:800;letter-spacing:-1.5px;line-height:1;}
-.verdict-value.strong{color:var(--green);}
-.verdict-value.moderate{color:var(--amber);}
-.verdict-value.weak{color:var(--red);}
-.verdict-value.unknown{color:var(--text-soft);}
+.analyse-btn {
+  display: block;
+  width: 100%;
+  margin-top: 28px;
+  padding: 16px;
+  background: linear-gradient(135deg, #4647d3, #6c63ff);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(70,71,211,0.28);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.analyse-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 12px 32px rgba(70,71,211,0.36);
+}
+.analyse-btn:active { transform: scale(0.98); }
+.form-footer-note {
+  margin-top: 14px;
+  text-align: center;
+  font-size: 12px;
+  color: #9a9d9f;
+}
 
-/* SECTIONS */
-.section{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:16px;opacity:0;transform:translateY(8px);transition:opacity 0.35s,transform 0.35s;}
-.section.visible{opacity:1;transform:translateY(0);}
-.section-title{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px;}
-.section-body{font-size:15px;color:var(--text-soft);line-height:1.7;}
-.section-body p+p{margin-top:8px;}
+/* ══════════════════════════════
+   LOADING SCREEN
+══════════════════════════════ */
+#loadingView {
+  min-height: 100vh;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+#loadingView.visible { display: flex; }
+.loading-title {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 28px;
+  text-align: center;
+}
+.loading-bar-track {
+  width: 100%;
+  max-width: 440px;
+  height: 4px;
+  background: #e5e9eb;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 32px;
+}
+.loading-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #4647d3, #8b5cf6);
+  border-radius: 4px;
+  animation: loadbar 6s forwards ease-in-out;
+}
+@keyframes loadbar { to { width: 100%; } }
+.loading-steps {
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.lstep {
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-size: 14px;
+  transition: background 0.3s, border-color 0.3s, color 0.3s, box-shadow 0.3s;
+  border: 1px solid rgba(70,71,211,0.10);
+  background: rgba(255,255,255,0.4);
+  color: #9a9d9f;
+}
+.lstep.active {
+  background: rgba(255,255,255,0.75);
+  border-color: rgba(70,71,211,0.30);
+  color: #2c2f31;
+  box-shadow: 0 0 18px rgba(70,71,211,0.10);
+}
 
-/* WHY */
-.why-line{font-size:15px;color:var(--text-soft);line-height:1.7;padding:8px 0;border-bottom:1px solid var(--border);}
-.why-line:first-child{font-weight:600;color:var(--text);font-size:16px;}
-.why-line:last-child{border-bottom:none;}
+/* ══════════════════════════════
+   ERROR BOX
+══════════════════════════════ */
+.error-box {
+  display: none;
+  max-width: 600px;
+  margin: 120px auto 0;
+  padding: 0 24px;
+}
+.error-msg {
+  padding: 14px 18px;
+  background: #fff5f5;
+  border: 1px solid #fca5a5;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #b91c1c;
+}
 
-/* PRIORITIES */
-.priority-list{display:flex;flex-direction:column;gap:8px;}
-.priority-item{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:var(--bg);border-radius:10px;}
-.priority-num{width:22px;height:22px;background:var(--primary);color:white;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
-.priority-text{font-size:14px;color:var(--text);line-height:1.5;}
+/* ══════════════════════════════
+   RESULT SCREEN
+══════════════════════════════ */
+#resultView {
+  padding-top: 100px;
+  padding-bottom: 80px;
+  max-width: 720px;
+  margin: 0 auto;
+  padding-left: 24px;
+  padding-right: 24px;
+}
 
-/* GAPS */
-.gaps-grid{display:flex;flex-direction:column;gap:8px;}
-.gap-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;font-size:14px;}
-.gap-item.matched{background:var(--green-soft);border:1px solid var(--green-border);color:var(--green);}
-.gap-item.missing{background:var(--red-soft);border:1px solid var(--red-border);color:var(--red);}
-.gap-ico{font-size:12px;font-weight:700;flex-shrink:0;}
+/* Verdict hero */
+.verdict-hero {
+  margin-bottom: 48px;
+}
+.verdict-text {
+  font-size: clamp(32px, 5vw, 52px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  margin-bottom: 10px;
+}
+.verdict-text.apply-confidently { color: #16a34a; }
+.verdict-text.apply-caution { color: #d97706; }
+.verdict-text.do-not-apply { color: #dc2626; }
+.verdict-role-label {
+  font-size: 16px;
+  color: #595c5e;
+  font-weight: 500;
+}
 
-/* RISK */
-.risk-card{background:var(--amber-soft);border:1px solid var(--amber-border);border-radius:16px;padding:24px;margin-bottom:16px;opacity:0;transform:translateY(8px);transition:opacity 0.35s,transform 0.35s;}
-.risk-card.visible{opacity:1;transform:translateY(0);}
-.risk-icon{width:36px;height:36px;background:#f59e0b;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-size:16px;}
-.risk-title{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--amber);margin-bottom:8px;}
-.risk-body{font-size:14px;color:#78350f;line-height:1.7;}
+/* Section label */
+.section-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #747779;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e5e9eb;
+  margin-bottom: 16px;
+}
 
-/* IMPACT */
-.impact-list{display:flex;flex-direction:column;gap:6px;}
-.impact-item{font-size:14px;color:var(--text-soft);line-height:1.6;padding:6px 0;border-bottom:1px solid var(--border);}
-.impact-item:last-child{border-bottom:none;}
+/* Result sections */
+.result-section {
+  margin-bottom: 40px;
+}
+
+/* WHY section */
+.why-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.why-item {
+  font-size: 15px;
+  color: #2c2f31;
+  line-height: 1.55;
+  padding-left: 20px;
+  position: relative;
+}
+.why-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 8px;
+  width: 7px;
+  height: 7px;
+  background: #4647d3;
+  border-radius: 50%;
+}
+
+/* Screening priorities */
+.screening-list {
+  list-style: none;
+  counter-reset: screening;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.screening-item {
+  counter-increment: screening;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  font-size: 14px;
+  color: #2c2f31;
+  line-height: 1.55;
+}
+.screening-item::before {
+  content: counter(screening);
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  background: rgba(70,71,211,0.10);
+  color: #4647d3;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+
+/* Capability gaps */
+.capability-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.capability-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14px;
+  line-height: 1.55;
+}
+.cap-icon {
+  flex-shrink: 0;
+  font-size: 14px;
+  margin-top: 2px;
+  font-weight: 700;
+}
+.cap-icon.green { color: #16a34a; }
+.cap-icon.red { color: #dc2626; }
+.capability-item.strength { color: #2c2f31; }
+.capability-item.gap { color: #595c5e; }
+
+/* Interview risk */
+.risk-card {
+  background: #fffbeb;
+  border: 1px solid rgba(217,119,6,0.30);
+  border-radius: 14px;
+  padding: 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+.risk-icon-wrap {
+  width: 40px;
+  height: 40px;
+  background: #d97706;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 18px;
+  color: #fff;
+}
+.risk-text {
+  font-size: 14px;
+  color: #78350f;
+  line-height: 1.6;
+}
+
+/* Career impact */
+.impact-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.impact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: #2c2f31;
+  line-height: 1.55;
+}
+.impact-item::before {
+  content: '→';
+  flex-shrink: 0;
+  color: #4647d3;
+  font-weight: 700;
+  margin-top: 1px;
+}
 
 /* CTA */
-.cta-section{text-align:center;padding:32px 0 0;}
-.cta-section h3{font-size:18px;font-weight:700;margin-bottom:16px;}
-.cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
-.btn-primary{padding:12px 28px;background:var(--primary);color:white;border:none;border-radius:100px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.15s;}
-.btn-primary:hover{background:#3536b8;}
-.btn-ghost{padding:12px 28px;background:none;border:1px solid var(--border);border-radius:100px;font-size:14px;font-weight:600;color:var(--text-soft);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.15s;}
-.btn-ghost:hover{border-color:var(--primary);color:var(--primary);}
-.reset-link{display:block;text-align:center;margin-top:24px;font-size:13px;color:var(--text-muted);cursor:pointer;background:none;border:none;font-family:'Plus Jakarta Sans',sans-serif;}
-.reset-link:hover{color:var(--text-soft);}
+.cta-row {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 52px;
+  align-items: center;
+}
+@media (min-width: 480px) {
+  .cta-row { flex-direction: row; justify-content: center; }
+}
+.cta-primary {
+  padding: 14px 32px;
+  background: #4647d3;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 100px;
+  box-shadow: 0 6px 20px rgba(70,71,211,0.28);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.cta-primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 28px rgba(70,71,211,0.36);
+}
+.cta-primary:active { transform: scale(0.97); }
+.cta-secondary {
+  padding: 13px 32px;
+  background: rgba(255,255,255,0.7);
+  color: #2c2f31;
+  font-size: 14px;
+  font-weight: 700;
+  border-radius: 100px;
+  border: 1px solid rgba(70,71,211,0.20);
+  backdrop-filter: blur(8px);
+  transition: background 0.15s, border-color 0.15s;
+}
+.cta-secondary:hover {
+  background: rgba(255,255,255,0.95);
+  border-color: rgba(70,71,211,0.40);
+}
+.cta-secondary:active { transform: scale(0.97); }
 
-/* CV PROFILE BANNER */
-.cv-banner{display:none;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;background:var(--green-soft);border:1px solid var(--green-border);border-radius:var(--radius);margin-top:16px;}
-.cv-banner.active{display:flex;}
-.cv-banner-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;}
-.cv-banner-text{font-size:13px;font-weight:600;color:var(--green);}
-.cv-banner-sub{font-size:11px;color:var(--text-muted);margin-top:2px;}
-.cv-banner-reset{background:none;border:1px solid var(--green-border);padding:4px 10px;border-radius:6px;font-size:11px;color:var(--text-muted);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;}
+/* ── Footer ── */
+footer {
+  border-top: 1px solid rgba(70,71,211,0.06);
+  padding: 40px 24px;
+  margin-top: 60px;
+  background: #f0f2f4;
+}
+.footer-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+.footer-logo { font-weight: 800; color: #4647d3; font-size: 16px; }
+.footer-links { display: flex; gap: 20px; }
+.footer-link { font-size: 12px; color: #9a9d9f; transition: color 0.15s; }
+.footer-link:hover { color: #4647d3; }
+.footer-copy { font-size: 12px; color: #9a9d9f; }
 </style>
 </head>
+
 <body>
 
-<nav>
-  <div class="nav-logo">Scop'd <span class="nav-dot"></span></div>
-  <div class="nav-links">
-    <a href="#" class="nav-link active">Analyse</a>
-    <a href="#" class="nav-link">History</a>
+<!-- ══════════════════════════════
+     NAV
+══════════════════════════════ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">Scop'd</div>
+    <div class="nav-links">
+      <a href="#" class="nav-link active">Analyse</a>
+      <a href="#" class="nav-link">History</a>
+    </div>
   </div>
 </nav>
 
-<!-- FORM -->
-<div id="formView">
-  <div class="form-hero">
-    <div class="form-badge"><span class="nav-dot"></span> Live Intelligence</div>
-    <h1 class="form-h1">Should you apply<br>to this job?</h1>
-    <p class="form-sub">Paste any job description. See what capabilities matter — and where you stand.</p>
-  </div>
-  <div class="form-card">
-    <label class="flabel" for="jdInput">Job Description</label>
-    <textarea id="jdInput" rows="8" placeholder="Paste the full job description here..."></textarea>
-
-    <div class="cv-banner" id="cvBanner">
-      <span class="cv-banner-dot"></span>
-      <div>
-        <div class="cv-banner-text">CV profile loaded</div>
-        <div class="cv-banner-sub" id="cvBannerSub">Analysing against your experience</div>
-      </div>
-      <button class="cv-banner-reset" onclick="resetCV()">Update CV</button>
+<!-- ══════════════════════════════
+     FORM VIEW
+══════════════════════════════ -->
+<div id="formView" class="screen">
+  <div style="padding-top:108px;padding-bottom:80px;max-width:720px;margin:0 auto;padding-left:24px;padding-right:24px;">
+    <div class="form-heading">
+      <h1>Should you apply<br>to this job?</h1>
+      <p>Paste any job description. See what matters — and where you stand.</p>
     </div>
 
-    <div class="cv-section" id="cvSection">
-      <div class="cv-header">
-        <div class="cv-title">Add your CV <span class="opt-tag">Optional</span></div>
-      </div>
-      <div class="cv-tabs">
-        <button class="cv-tab active" onclick="switchTab('upload',this)">Upload PDF</button>
-        <button class="cv-tab" onclick="switchTab('paste',this)">Paste Text</button>
-      </div>
-      <div class="cv-pane active" id="paneUpload">
-        <label class="upload-btn" for="cvFile">↑ <span id="uploadLabel">Choose PDF</span></label>
-        <input type="file" id="cvFile" accept=".pdf" style="display:none" onchange="handleFile(this)">
-        <div id="fileStatus"></div>
-      </div>
-      <div class="cv-pane" id="panePaste">
-        <textarea id="cvPaste" rows="5" placeholder="Paste your CV text here..."></textarea>
-      </div>
-    </div>
+    <div class="form-card">
+      <label class="field-label" for="jdInput">Job description</label>
+      <textarea id="jdInput" rows="8" class="jd-textarea" placeholder="Paste the full job description here…"></textarea>
 
-    <button class="cta" onclick="analyse()">Get my decision →</button>
-    <p class="trust">Takes ~8 seconds · No signup required · Free</p>
+      <div class="cv-section">
+        <div class="cv-section-header">
+          <label class="field-label" style="margin-bottom:0;">Your CV</label>
+          <span class="optional-badge">Optional</span>
+        </div>
+        <div class="cv-box">
+          <div class="cv-tabs">
+            <button class="cv-tab active" id="tabUpload" onclick="switchTab('upload')">Upload PDF</button>
+            <button class="cv-tab" id="tabPaste" onclick="switchTab('paste')">Paste Text</button>
+          </div>
+          <div class="cv-tab-panel active" id="panelUpload">
+            <div class="cv-upload-panel">
+              <label class="upload-btn-label" for="cvFile">
+                <span class="upload-icon">📄</span>
+                <span id="uploadLabel">Choose PDF file</span>
+              </label>
+              <input type="file" id="cvFile" accept=".pdf" style="display:none;" onchange="handleFileUpload(this)">
+              <div id="fileStatus"></div>
+            </div>
+          </div>
+          <div class="cv-tab-panel" id="panelPaste">
+            <textarea id="cvPasteInput" class="cv-paste-textarea" rows="5" placeholder="Paste your CV text here…"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <button class="analyse-btn" onclick="analyse()">Get my decision →</button>
+      <p class="form-footer-note">Takes ~5 seconds · No signup required</p>
+    </div>
   </div>
 </div>
 
-<!-- LOADING -->
-<div id="loading">
-  <div class="loading-h">Analysing your fit</div>
-  <div class="loading-bar-wrap"><div class="loading-bar" id="loadBar"></div></div>
+<!-- ══════════════════════════════
+     LOADING VIEW
+══════════════════════════════ -->
+<div id="loadingView">
+  <h2 class="loading-title">Analysing your fit…</h2>
+  <div class="loading-bar-track">
+    <div class="loading-bar-fill" id="loadingBar"></div>
+  </div>
   <div class="loading-steps">
-    <div class="lstep active" id="ls1">Reading job description</div>
-    <div class="lstep" id="ls2">Extracting role capabilities</div>
-    <div class="lstep" id="ls3">Analysing your profile</div>
-    <div class="lstep" id="ls4">Evaluating capability fit</div>
-    <div class="lstep" id="ls5">Building your assessment</div>
+    <div class="lstep" id="lstep1">Reading job description</div>
+    <div class="lstep" id="lstep2">Extracting hiring signals</div>
+    <div class="lstep" id="lstep3">Classifying role archetype</div>
+    <div class="lstep" id="lstep4">Evaluating screening risk</div>
+    <div class="lstep" id="lstep5">Generating your verdict</div>
   </div>
 </div>
 
-<!-- ERROR -->
-<div id="errorBox">
-  <div class="err-card" id="errorMsg"></div>
+<!-- ══════════════════════════════
+     ERROR BOX
+══════════════════════════════ -->
+<div class="error-box" id="errorBox">
+  <div class="error-msg" id="errorMsg"></div>
 </div>
 
-<!-- RESULT -->
-<div id="result">
-  <div class="result-top">
-    <div class="result-role" id="resultRole"></div>
-    <button class="save-btn" id="saveBtn" onclick="saveResult()" style="display:none">+ Save</button>
-  </div>
+<!-- ══════════════════════════════
+     RESULT VIEW
+══════════════════════════════ -->
+<div id="resultView" class="screen">
 
   <!-- Verdict -->
-  <div class="verdict-section">
-    <div class="verdict-label">Capability Fit</div>
-    <div class="verdict-value" id="verdictValue"></div>
+  <div class="verdict-hero">
+    <div class="verdict-text" id="verdictText"></div>
+    <div class="verdict-role-label" id="roleLabel"></div>
   </div>
 
-  <!-- Why this fit -->
-  <div class="section" id="secWhy">
-    <div class="section-title">Why this assessment</div>
-    <div id="whyBody"></div>
+  <!-- WHY THIS FIT -->
+  <div class="result-section" id="whySection">
+    <span class="section-label">Why this fit</span>
+    <ul class="why-list" id="whyList"></ul>
   </div>
 
-  <!-- Screening Priorities -->
-  <div class="section" id="secPriorities">
-    <div class="section-title">Screening priorities</div>
-    <div class="priority-list" id="priorityList"></div>
+  <!-- SCREENING PRIORITIES -->
+  <div class="result-section" id="screeningSection">
+    <span class="section-label">Screening priorities</span>
+    <ol class="screening-list" id="screeningList"></ol>
   </div>
 
-  <!-- Capability Gaps -->
-  <div class="section" id="secGaps">
-    <div class="section-title">Capability gaps</div>
-    <div class="gaps-grid" id="gapsGrid"></div>
+  <!-- CAPABILITY GAPS -->
+  <div class="result-section" id="capabilitySection">
+    <span class="section-label">Capability gaps</span>
+    <ul class="capability-list" id="capabilityList"></ul>
   </div>
 
-  <!-- Interview Risk -->
-  <div class="risk-card" id="secRisk">
-    <div class="risk-icon">⚡</div>
-    <div class="risk-title">Interview risk</div>
-    <div class="risk-body" id="riskBody"></div>
+  <!-- INTERVIEW RISK -->
+  <div class="result-section" id="riskSection" style="display:none;">
+    <span class="section-label">Interview risk</span>
+    <div class="risk-card">
+      <div class="risk-icon-wrap">⚡</div>
+      <p class="risk-text" id="riskText"></p>
+    </div>
   </div>
 
-  <!-- Career Impact -->
-  <div class="section" id="secImpact">
-    <div class="section-title">Career impact</div>
-    <div class="impact-list" id="impactList"></div>
+  <!-- CAREER IMPACT -->
+  <div class="result-section" id="impactSection" style="display:none;">
+    <span class="section-label">Career impact</span>
+    <ul class="impact-list" id="impactList"></ul>
   </div>
 
   <!-- CTA -->
-  <div class="cta-section">
-    <h3>What do you want to do next?</h3>
-    <div class="cta-row">
-      <button class="btn-primary" onclick="reset()">Analyse another role →</button>
-      <button class="btn-ghost" onclick="reset()">Improve my profile</button>
-    </div>
+  <div class="cta-row">
+    <button class="cta-primary" onclick="reset()">Analyse another role</button>
+    <button class="cta-secondary" onclick="reset()">Improve my profile →</button>
   </div>
 
-  <button class="reset-link" onclick="reset()">← Analyse another role</button>
 </div>
 
-<script>
-pdfjsLib.GlobalWorkerOptions.workerSrc='https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+<!-- ══════════════════════════════
+     FOOTER
+══════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Scop'd</div>
+    <div class="footer-links">
+      <a href="#" class="footer-link">Privacy</a>
+      <a href="#" class="footer-link">Terms</a>
+      <a href="#" class="footer-link">Contact</a>
+    </div>
+    <div class="footer-copy">© 2026 Scop'd</div>
+  </div>
+</footer>
 
-const SK_PROFILE = 'scopd_cv_profile';
+<script>
+pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+
 let cvText = null;
-let resultData = null;
 let lstepTimer = null;
 
-function getProfile(){ try{ return JSON.parse(sessionStorage.getItem(SK_PROFILE)); }catch(e){ return null; } }
-
-function renderCVBanner(){
-  const p = getProfile();
-  const banner = document.getElementById('cvBanner');
-  const section = document.getElementById('cvSection');
-  if(p){
-    banner.classList.add('active');
-    const sigs = p.strengths || [];
-    document.getElementById('cvBannerSub').textContent = sigs.length ? sigs.slice(0,3).join(' · ') : 'Profile loaded';
-    section.style.display = 'none';
-    if(p._raw) cvText = p._raw;
-  } else {
-    banner.classList.remove('active');
-    section.style.display = 'block';
-  }
+/* ── Tabs ── */
+function switchTab(tab) {
+  document.getElementById('panelUpload').classList.toggle('active', tab === 'upload');
+  document.getElementById('panelPaste').classList.toggle('active', tab === 'paste');
+  document.getElementById('tabUpload').classList.toggle('active', tab === 'upload');
+  document.getElementById('tabPaste').classList.toggle('active', tab === 'paste');
 }
 
-function resetCV(){
-  sessionStorage.removeItem(SK_PROFILE);
-  cvText = null;
-  renderCVBanner();
-}
-
-function switchTab(tab, btn){
-  document.querySelectorAll('.cv-tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.cv-pane').forEach(p => p.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById(tab === 'upload' ? 'paneUpload' : 'panePaste').classList.add('active');
-}
-
-async function handleFile(input){
-  const file = input.files[0]; if(!file) return;
-  const s = document.getElementById('fileStatus');
-  s.style.display = 'block'; s.style.color = '#595c5e'; s.textContent = 'Reading...';
-  try{
-    const pdf = await pdfjsLib.getDocument({data: await file.arrayBuffer()}).promise;
-    let t = '';
-    for(let i=1;i<=pdf.numPages;i++){
-      const pg = await pdf.getPage(i);
-      const ct = await pg.getTextContent();
-      t += ct.items.map(x=>x.str).join(' ') + '\n';
+/* ── File upload ── */
+async function handleFileUpload(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const status = document.getElementById('fileStatus');
+  status.style.display = 'block';
+  status.style.color = '#595c5e';
+  status.textContent = 'Reading PDF…';
+  try {
+    const pdf = await pdfjsLib.getDocument({ data: await file.arrayBuffer() }).promise;
+    let text = '';
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const content = await page.getTextContent();
+      text += content.items.map(x => x.str).join(' ') + '\n';
     }
-    cvText = t.trim();
-    s.textContent = '✓ ' + file.name; s.style.color = '#16a34a'; s.style.fontWeight = '600';
+    cvText = text.trim();
+    status.textContent = '✓ ' + file.name;
+    status.style.color = '#16a34a';
     document.getElementById('uploadLabel').textContent = file.name;
-  }catch(err){
-    s.textContent = 'Could not read PDF — try Paste Text'; s.style.color = '#dc2626';
+  } catch (e) {
+    status.textContent = 'Could not read PDF. Try Paste Text instead.';
+    status.style.color = '#b91c1c';
   }
 }
 
-function startLoading(){
-  let i = 1;
-  if(lstepTimer) clearInterval(lstepTimer);
-  for(let n=1;n<=5;n++) setStep(n, false);
+/* ── Loading steps ── */
+function startLoadingSteps() {
+  let idx = 1;
+  if (lstepTimer) clearInterval(lstepTimer);
+  for (let i = 1; i <= 5; i++) setStep(i, false);
   setStep(1, true);
-  const bar = document.getElementById('loadBar');
-  bar.style.animation = 'none'; bar.offsetHeight; bar.style.animation = '';
-  lstepTimer = setInterval(()=>{
-    setStep(i, false); i++;
-    if(i<=5) setStep(i, true);
-    if(i>5) clearInterval(lstepTimer);
-  }, 1400);
+  const bar = document.getElementById('loadingBar');
+  if (bar) { bar.style.animation = 'none'; void bar.offsetHeight; bar.style.animation = ''; }
+  lstepTimer = setInterval(() => {
+    setStep(idx, false);
+    idx++;
+    if (idx <= 5) setStep(idx, true);
+    if (idx > 5) clearInterval(lstepTimer);
+  }, 1200);
+}
+function stopLoadingSteps() {
+  if (lstepTimer) clearInterval(lstepTimer);
+}
+function setStep(i, active) {
+  const el = document.getElementById('lstep' + i);
+  if (!el) return;
+  el.classList.toggle('active', active);
 }
 
-function setStep(n, active){
-  const el = document.getElementById('ls'+n); if(!el) return;
-  el.className = 'lstep' + (active ? ' active' : '');
+/* ── Screen helpers ── */
+function showForm() {
+  document.getElementById('formView').classList.add('visible');
+  document.getElementById('loadingView').classList.remove('visible');
+  document.getElementById('resultView').classList.remove('visible');
+  document.getElementById('errorBox').style.display = 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function showLoading() {
+  document.getElementById('formView').classList.remove('visible');
+  document.getElementById('loadingView').classList.add('visible');
+  document.getElementById('resultView').classList.remove('visible');
+  document.getElementById('errorBox').style.display = 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function showResult() {
+  document.getElementById('formView').classList.remove('visible');
+  document.getElementById('loadingView').classList.remove('visible');
+  document.getElementById('resultView').classList.add('visible');
+  document.getElementById('errorBox').style.display = 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function show(id){ document.getElementById(id).style.display = id === 'loading' ? 'flex' : 'block'; }
-function hide(id){ document.getElementById(id).style.display = 'none'; }
+/* ── Render result ── */
+function renderResult(data) {
+  /* Verdict */
+  const verdict = data.verdict || '';
+  const vEl = document.getElementById('verdictText');
+  vEl.textContent = verdict;
+  vEl.className = 'verdict-text';
+  const vl = verdict.toLowerCase();
+  if (vl.includes('confidently')) vEl.classList.add('apply-confidently');
+  else if (vl.includes('caution')) vEl.classList.add('apply-caution');
+  else if (vl.includes('not') || vl.includes('do not')) vEl.classList.add('do-not-apply');
 
-async function analyse(){
-  const jd = document.getElementById('jdInput').value.trim();
-  if(jd.length < 100){ alert('Please paste a full job description.'); return; }
-  const pasted = document.getElementById('cvPaste').value.trim();
-  if(pasted) cvText = pasted;
-  const profile = getProfile();
-  if(!cvText && profile && profile._raw) cvText = profile._raw;
+  /* Role label */
+  document.getElementById('roleLabel').textContent = data.role_label || data.role_type || '';
 
-  hide('formView'); hide('errorBox'); hide('result');
-  show('loading'); startLoading();
-
-  try{
-    const res = await fetch('/api/classify', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify({jd, cvText: cvText || null})
-    });
-    const data = await res.json();
-    if(data.error) throw new Error(data.message || 'Analysis failed');
-
-    if(data.strengths && !getProfile()){
-      sessionStorage.setItem(SK_PROFILE, JSON.stringify({strengths: data.strengths, _raw: cvText}));
-    }
-
-    clearInterval(lstepTimer);
-    hide('loading');
-    resultData = data;
-    renderResult(data);
-    show('result');
-    window.scrollTo({top:0,behavior:'smooth'});
-  }catch(err){
-    clearInterval(lstepTimer);
-    hide('loading');
-    document.getElementById('errorMsg').textContent = err.message || 'Something went wrong.';
-    show('errorBox');
-    show('formView');
-  }
-}
-
-function reveal(id, delay=0){
-  setTimeout(()=>{
-    const el = document.getElementById(id); if(!el) return;
-    el.classList.add('visible');
-  }, delay);
-}
-
-function renderResult(data){
-  // Role label
-  document.getElementById('resultRole').textContent = data.role_label || '';
-
-  // Verdict
-  const v = (data.verdict || '').toLowerCase();
-  const vEl = document.getElementById('verdictValue');
-  vEl.textContent = data.verdict || 'Unable to evaluate';
-  vEl.className = 'verdict-value ' + (v.includes('confidently') ? 'strong' : v.includes('caution') ? 'moderate' : v.includes('not') ? 'weak' : 'unknown');
-
-  // Why
+  /* WHY THIS FIT */
   const why = data.why || [];
-  document.getElementById('whyBody').innerHTML = why.map(w => `<div class="why-line">${w}</div>`).join('');
+  const whyList = document.getElementById('whyList');
+  whyList.innerHTML = why.map(w => `<li class="why-item">${w}</li>`).join('');
+  document.getElementById('whySection').style.display = why.length ? '' : 'none';
 
-  // Screening priorities
-  const priorities = data.decision_reasons || [];
-  document.getElementById('priorityList').innerHTML = priorities.map((p,i) =>
-    `<div class="priority-item"><span class="priority-num">${i+1}</span><span class="priority-text">${p}</span></div>`
-  ).join('');
+  /* SCREENING PRIORITIES */
+  const reasons = data.decision_reasons || [];
+  const screeningList = document.getElementById('screeningList');
+  screeningList.innerHTML = reasons.map(r => `<li class="screening-item">${r}</li>`).join('');
+  document.getElementById('screeningSection').style.display = reasons.length ? '' : 'none';
 
-  // Gaps
+  /* CAPABILITY GAPS */
   const strengths = data.strengths || [];
   const gaps = data.gaps || [];
-  let gapsHtml = strengths.map(s =>
-    `<div class="gap-item matched"><span class="gap-ico">✓</span>${s}</div>`
-  ).join('') + gaps.map(g =>
-    `<div class="gap-item missing"><span class="gap-ico">✗</span>${g}</div>`
-  ).join('');
-  document.getElementById('gapsGrid').innerHTML = gapsHtml || '<div style="color:var(--text-muted);font-size:14px;">No CV provided — paste your CV to see capability gaps</div>';
-
-  // Risk
-  if(data.risk){
-    document.getElementById('riskBody').textContent = data.risk;
-    document.getElementById('secRisk').style.display = 'block';
-  } else {
-    document.getElementById('secRisk').style.display = 'none';
-  }
-
-  // Career impact
-  const impact = data.career_impact || [];
-  document.getElementById('impactList').innerHTML = impact.map(i =>
-    `<div class="impact-item">${i}</div>`
-  ).join('');
-
-  // Reveal with stagger
-  let d = 0;
-  ['secWhy','secPriorities','secGaps','secRisk','secImpact'].forEach(id => {
-    reveal(id, d); d += 100;
+  const capList = document.getElementById('capabilityList');
+  let capHTML = '';
+  strengths.forEach(s => {
+    capHTML += `<li class="capability-item strength"><span class="cap-icon green">✓</span><span>${s}</span></li>`;
   });
+  gaps.forEach(g => {
+    capHTML += `<li class="capability-item gap"><span class="cap-icon red">✗</span><span>${g}</span></li>`;
+  });
+  capList.innerHTML = capHTML;
+  document.getElementById('capabilitySection').style.display = (strengths.length || gaps.length) ? '' : 'none';
 
-  // Save button
-  document.getElementById('saveBtn').style.display = 'block';
+  /* INTERVIEW RISK */
+  const risk = data.risk || '';
+  document.getElementById('riskText').textContent = risk;
+  document.getElementById('riskSection').style.display = risk ? '' : 'none';
+
+  /* CAREER IMPACT */
+  const impact = data.career_impact || [];
+  const impactList = document.getElementById('impactList');
+  impactList.innerHTML = impact.map(c => `<li class="impact-item">${c}</li>`).join('');
+  document.getElementById('impactSection').style.display = impact.length ? '' : 'none';
 }
 
-function saveResult(){
-  document.getElementById('saveBtn').textContent = '✓ Saved';
-  document.getElementById('saveBtn').style.color = '#16a34a';
+/* ── Analyse ── */
+async function analyse() {
+  const jd = document.getElementById('jdInput').value.trim();
+  if (jd.length < 100) { alert('Please paste a full job description (at least a few paragraphs).'); return; }
+  const pasted = document.getElementById('cvPasteInput').value.trim();
+  if (pasted) cvText = pasted;
+
+  showLoading();
+  startLoadingSteps();
+
+  try {
+    const res = await fetch('/api/classify', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ jd, cvText: cvText || null })
+    });
+    const data = await res.json();
+    if (data.error) throw new Error(data.error);
+    stopLoadingSteps();
+    renderResult(data);
+    showResult();
+  } catch (err) {
+    stopLoadingSteps();
+    showForm();
+    const box = document.getElementById('errorBox');
+    document.getElementById('errorMsg').textContent = err.message || 'Something went wrong. Please try again.';
+    box.style.display = 'block';
+  }
 }
 
-function reset(){
-  cvText = null; resultData = null;
+/* ── Reset ── */
+function reset() {
   document.getElementById('jdInput').value = '';
-  document.getElementById('cvPaste').value = '';
+  document.getElementById('cvPasteInput').value = '';
   document.getElementById('cvFile').value = '';
+  document.getElementById('uploadLabel').textContent = 'Choose PDF file';
   document.getElementById('fileStatus').style.display = 'none';
-  document.getElementById('uploadLabel').textContent = 'Choose PDF';
-  document.getElementById('errorBox').style.display = 'none';
-  document.getElementById('result').style.display = 'none';
-  hide('result'); hide('errorBox');
-  show('formView');
-  renderCVBanner();
-  window.scrollTo({top:0,behavior:'smooth'});
+  cvText = null;
+  showForm();
 }
 
-// Boot
-renderCVBanner();
-show('formView');
+/* ── Boot ── */
+showForm();
 </script>
+
+<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
