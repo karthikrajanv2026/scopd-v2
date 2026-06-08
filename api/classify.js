@@ -174,8 +174,8 @@ Return ONLY valid JSON in this exact format:
   "risk": "specific interview questions or probing areas the interviewer will push on — e.g. 'Expect to be asked to walk through a SQL query live' or 'They will probe your experience owning a dashboard end-to-end'. This is about interview preparation, not job requirements.",
   "hidden_expectations": ["unstated assumption the employer has that is NOT written in the job description — e.g. 'Candidate is expected to work autonomously with no handholding from day one' or 'The team assumes prior experience in a fast-growth startup'. These are employer mindset assumptions, not interview questions."],
   "career_impact": {
-    "strengthens": ["specific skill 1", "specific skill 2"],
-    "limited_exposure": ["area 1", "area 2"]
+    "strengthens": ["specific deliverable or skill built by doing this role daily"],
+    "limited_exposure": ["specific career discipline this role does not develop"]
   }
 }
 
@@ -183,8 +183,14 @@ Rules:
 - risk = what the interviewer will probe or test. Specific questions or scenarios the candidate should prepare for. Not requirements — preparation intel.
 - hidden_expectations = unstated assumptions the employer holds about the ideal candidate that are not written anywhere in the job description. Not interview questions.
 - risk and hidden_expectations must not overlap. They cover different things.
-- career_impact.strengthens = specific skills, capabilities or experiences the candidate will build by doing this role. Must be concrete and career-relevant — e.g. "Agile delivery ownership", "Functional specification writing", "Client-facing requirement discovery". Never include personality traits or soft skills such as "Strong communication", "Attention to detail", or "Logical thinking".
-- career_impact.limited_exposure = specific career areas or disciplines this role does NOT develop, relevant to data, business or product careers — e.g. "Product strategy", "Data science", "Commercial ownership", "Advanced analytics". Never use generic phrases.
+
+CAREER IMPACT RULES — these are absolute:
+- strengthens items must be things the candidate will literally do or build in this role. Derive them from the responsibilities array. Examples: "functional specification writing", "UAT coordination", "agile sprint planning", "stakeholder workshop facilitation", "dashboard ownership", "requirements elicitation".
+- BANNED from strengthens: "communication skills", "organizational skills", "attention to detail", "logical thinking", "problem solving", "teamwork", "time management", "stakeholder management" as a generic phrase, any soft skill or personality trait.
+- limited_exposure items must be specific career disciplines or technical domains absent from this role. Derive them from what the role does NOT require. Examples: "product strategy", "data science", "advanced analytics", "machine learning", "commercial ownership", "engineering management", "UX research".
+- BANNED from limited_exposure: generic phrases, soft skills, anything already covered in strengthens.
+- Minimum 3 items in each array. Maximum 5.
+
 - Be specific. Name actual skills and responsibilities. Do not be generic.
 Return ONLY JSON.`
     }]
