@@ -34,7 +34,7 @@ function buildResponse(role, candidate, fit) {
     strengths: capFit.matched || [],
     gaps: capFit.gaps || [],
     decision_reasons: fit.screening_priorities || [],
-    risk: fit.hidden_expectations ? fit.hidden_expectations.join('. ') : null,
+    risk: fit.risk || null,
     career_impact: fit.career_impact || {},
     screening_priorities: fit.screening_priorities || [],
     hidden_expectations: fit.hidden_expectations || [],
@@ -171,14 +171,19 @@ Return ONLY valid JSON in this exact format:
   "goal_fit": null,
   "practical_fit": null,
   "screening_priorities": ["what recruiter will look for first", "second priority"],
-  "hidden_expectations": ["unstated expectation1", "unstated expectation2"],
+  "risk": "specific interview questions or probing areas the interviewer will push on — e.g. 'Expect to be asked to walk through a SQL query live' or 'They will probe your experience owning a dashboard end-to-end'. This is about interview preparation, not job requirements.",
+  "hidden_expectations": ["unstated assumption the employer has that is NOT written in the job description — e.g. 'Candidate is expected to work autonomously with no handholding from day one' or 'The team assumes prior experience in a fast-growth startup'. These are employer mindset assumptions, not interview questions."],
   "career_impact": {
     "strengthens": ["specific skill 1", "specific skill 2"],
     "limited_exposure": ["area 1", "area 2"]
   }
 }
 
-Be specific. Name actual skills and responsibilities. Do not be generic.
+Rules:
+- risk = what the interviewer will probe or test. Specific questions or scenarios the candidate should prepare for. Not requirements — preparation intel.
+- hidden_expectations = unstated assumptions the employer holds about the ideal candidate that are not written anywhere in the job description. Not interview questions.
+- risk and hidden_expectations must not overlap. They cover different things.
+- Be specific. Name actual skills and responsibilities. Do not be generic.
 Return ONLY JSON.`
     }]
   });
