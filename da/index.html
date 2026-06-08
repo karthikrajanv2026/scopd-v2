@@ -1,1087 +1,492 @@
+Replace da/index.html with this exact content:
+
 <!DOCTYPE html>
-<html lang="en" class="light">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Scop'd — DA Role Intelligence</title>
-<meta name="description" content="Decode any Data Analyst job description. Scop'd reveals DA hiring signals, scores your CV fit. Free, no signup.">
-<link rel="canonical" href="https://scopd.online/da/">
-
-<script src="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+<title>Scop'd — Should you apply?</title>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-
-<script id="tailwind-config">
-tailwind.config = {
-  darkMode: "class",
-  theme: {
-    extend: {
-      colors: {
-        "error": "#b41340",
-        "surface-variant": "#d9dde0",
-        "secondary": "#5e4ab3",
-        "outline-variant": "#abadaf",
-        "primary-fixed": "#9396ff",
-        "on-tertiary-fixed-variant": "#41208e",
-        "on-primary-fixed-variant": "#0e009d",
-        "on-error": "#ffefef",
-        "error-dim": "#a70138",
-        "secondary-fixed-dim": "#c8bbff",
-        "on-surface-variant": "#595c5e",
-        "secondary-fixed": "#d6cbff",
-        "primary-dim": "#3939c7",
-        "on-tertiary-fixed": "#1d0054",
-        "surface-bright": "#f5f7f9",
-        "on-secondary-fixed-variant": "#533ea7",
-        "on-secondary-container": "#4a349d",
-        "secondary-dim": "#523da6",
-        "surface-dim": "#d0d5d8",
-        "on-secondary-fixed": "#361c89",
-        "on-primary-fixed": "#000000",
-        "primary-container": "#9396ff",
-        "inverse-primary": "#8083ff",
-        "on-surface": "#2c2f31",
-        "surface-container-low": "#eef1f3",
-        "outline": "#747779",
-        "on-error-container": "#510017",
-        "on-background": "#2c2f31",
-        "on-secondary": "#f6f0ff",
-        "on-primary": "#f4f1ff",
-        "primary-fixed-dim": "#8387ff",
-        "tertiary-fixed": "#baa3ff",
-        "surface": "#f5f7f9",
-        "primary": "#4647d3",
-        "tertiary": "#6448b2",
-        "surface-tint": "#4647d3",
-        "secondary-container": "#d6cbff",
-        "surface-container-highest": "#d9dde0",
-        "surface-container-high": "#dfe3e6",
-        "tertiary-fixed-dim": "#ad92ff",
-        "surface-container-lowest": "#ffffff",
-        "inverse-surface": "#0b0f10",
-        "error-container": "#f74b6d",
-        "inverse-on-surface": "#9a9d9f",
-        "on-tertiary-container": "#381485",
-        "background": "#f5f7f9",
-        "tertiary-dim": "#583ba5",
-        "surface-container": "#e5e9eb",
-        "on-tertiary": "#f7f0ff",
-        "on-primary-container": "#0a0081",
-        "tertiary-container": "#baa3ff"
-      },
-      fontFamily: {
-        "headline": ["Plus Jakarta Sans"],
-        "body": ["Plus Jakarta Sans"],
-        "label": ["Plus Jakarta Sans"]
-      },
-      borderRadius: { "DEFAULT": "1rem", "lg": "2rem", "xl": "3rem", "full": "9999px" }
-    }
-  }
-}
-</script>
-
+<script src="https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
 <style>
-  .glass-card {
-    background: rgba(255,255,255,0.6);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-  }
-  .signal-pulse {
-    box-shadow: 0 0 12px #4647d3;
-    animation: pulse 2s infinite;
-  }
-  @keyframes pulse {
-    0%,100% { opacity:1; }
-    50% { opacity:0.4; }
-  }
-  .material-symbols-outlined {
-    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
-  }
-  .font-fill {
-    font-variation-settings: 'FILL' 1;
-  }
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#f5f7f9;
+  --surface:#ffffff;
+  --border:#e5e9eb;
+  --primary:#4647d3;
+  --primary-soft:rgba(70,71,211,0.08);
+  --text:#1a1d1e;
+  --text-soft:#595c5e;
+  --text-muted:#9a9d9f;
+  --green:#16a34a;
+  --green-soft:#f0fdf4;
+  --green-border:#bbf7d0;
+  --amber:#b45309;
+  --amber-soft:#fffbeb;
+  --amber-border:#fde68a;
+  --red:#dc2626;
+  --red-soft:#fef2f2;
+  --red-border:#fecaca;
+  --radius:12px;
+}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;-webkit-font-smoothing:antialiased;}
 
-  .loading-bar {
-    height: 4px;
-    width: 0%;
-    background: linear-gradient(90deg, #4647d3, #8B5CF6);
-    border-radius: 4px;
-    animation: loadbar 6s forwards;
-  }
-  @keyframes loadbar { to { width: 100%; } }
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:64px;background:rgba(255,255,255,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 32px;}
+.nav-logo{font-size:20px;font-weight:800;color:var(--primary);letter-spacing:-0.5px;display:flex;align-items:center;gap:6px;}
+.nav-dot{width:6px;height:6px;background:var(--primary);border-radius:50%;animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+.nav-links{display:flex;gap:0;}
+.nav-link{padding:8px 20px;font-size:14px;font-weight:600;color:var(--text-soft);text-decoration:none;border-bottom:2px solid transparent;transition:all 0.15s;}
+.nav-link.active{color:var(--primary);border-bottom-color:var(--primary);}
+.nav-link:hover{color:var(--primary);}
 
-  .rblock {
-    opacity: 0;
-    transform: translateY(8px);
-    transition: opacity 0.35s, transform 0.35s;
-  }
-  .rblock.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* FORM */
+#formView{padding:100px 24px 80px;max-width:680px;margin:0 auto;}
+.form-hero{margin-bottom:32px;}
+.form-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;background:var(--primary-soft);border-radius:100px;font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--primary);margin-bottom:16px;}
+.form-h1{font-size:40px;font-weight:800;letter-spacing:-1px;line-height:1.1;color:var(--text);margin-bottom:12px;}
+.form-sub{font-size:16px;color:var(--text-soft);line-height:1.6;}
+.form-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;box-shadow:0 4px 24px rgba(0,0,0,0.06);}
+.flabel{display:block;font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;}
+textarea{width:100%;padding:14px;border:1px solid var(--border);border-radius:var(--radius);font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--text);background:var(--bg);resize:vertical;outline:none;transition:border-color 0.15s;}
+textarea:focus{border-color:var(--primary);}
+textarea::placeholder{color:var(--text-muted);}
+.cv-section{margin-top:16px;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;}
+.cv-header{padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);}
+.cv-title{font-size:13px;font-weight:600;color:var(--text);display:flex;align-items:center;gap:8px;}
+.opt-tag{font-size:10px;font-weight:700;padding:2px 8px;border-radius:4px;background:var(--amber-soft);color:var(--amber);border:1px solid var(--amber-border);}
+.cv-tabs{display:flex;border-bottom:1px solid var(--border);}
+.cv-tab{flex:1;padding:10px;font-size:12px;font-weight:600;font-family:'Plus Jakarta Sans',sans-serif;border:none;background:none;cursor:pointer;color:var(--text-muted);border-bottom:2px solid transparent;transition:all 0.15s;}
+.cv-tab.active{color:var(--primary);border-bottom-color:var(--primary);background:var(--primary-soft);}
+.cv-pane{display:none;padding:14px 16px;}
+.cv-pane.active{display:block;}
+.upload-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:var(--bg);border:1px solid var(--border);border-radius:8px;font-size:13px;font-weight:500;color:var(--text-soft);cursor:pointer;transition:all 0.15s;}
+.upload-btn:hover{border-color:var(--primary);color:var(--primary);}
+#fileStatus{display:none;font-size:12px;font-weight:600;margin-top:8px;}
+.cta{width:100%;margin-top:20px;padding:15px;background:var(--primary);color:white;border:none;border-radius:var(--radius);font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.cta:hover{background:#3536b8;transform:translateY(-1px);}
+.trust{text-align:center;margin-top:10px;font-size:11px;color:var(--text-muted);}
 
-  .decision-card {
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.4s, transform 0.4s;
-  }
-  .decision-card.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* LOADING */
+#loading{display:none;min-height:100vh;flex-direction:column;align-items:center;justify-content:center;gap:0;padding:24px;}
+.loading-h{font-size:28px;font-weight:800;letter-spacing:-0.5px;margin-bottom:24px;}
+.loading-bar-wrap{width:480px;max-width:100%;height:4px;background:var(--border);border-radius:4px;overflow:hidden;margin-bottom:32px;}
+.loading-bar{height:100%;width:0;background:var(--primary);animation:loadbar 6s forwards;}
+@keyframes loadbar{to{width:100%;}}
+.loading-steps{width:480px;max-width:100%;display:flex;flex-direction:column;gap:10px;}
+.lstep{padding:12px 16px;border-radius:var(--radius);border:1px solid var(--border);font-size:13px;color:var(--text-muted);background:var(--surface);transition:all 0.3s;}
+.lstep.active{border-color:var(--primary);color:var(--text);background:var(--primary-soft);font-weight:600;}
 
-  .dim-fill {
-    height: 100%;
-    background: linear-gradient(90deg, #4647d3, #8B5CF6);
-    border-radius: 4px;
-    transition: width 0.9s cubic-bezier(0.4,0,0.2,1);
-  }
+/* ERROR */
+#errorBox{display:none;padding:100px 24px;max-width:600px;margin:0 auto;}
+.err-card{padding:16px;background:var(--red-soft);border:1px solid var(--red-border);border-radius:var(--radius);font-size:14px;color:var(--red);}
 
-  .section-label {
-    display: block;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #595c5e;
-    margin: 32px 0 12px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid #e5e9eb;
-  }
+/* RESULT */
+#result{display:none;padding:80px 24px 80px;max-width:800px;margin:0 auto;}
+.result-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:32px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+.result-role{font-size:13px;font-weight:600;color:var(--text-soft);}
+.save-btn{padding:7px 14px;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:12px;font-weight:600;color:var(--primary);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.15s;}
+.save-btn:hover{border-color:var(--primary);background:var(--primary-soft);}
 
-  .signal-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-    padding: 9px 0;
-    border-bottom: 1px solid #e5e9eb;
-    font-size: 14px;
-    color: #595c5e;
-  }
-  .signal-row:last-child { border-bottom: none; }
+/* VERDICT */
+.verdict-section{margin-bottom:32px;}
+.verdict-label{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px;}
+.verdict-value{font-size:48px;font-weight:800;letter-spacing:-1.5px;line-height:1;}
+.verdict-value.strong{color:var(--green);}
+.verdict-value.moderate{color:var(--amber);}
+.verdict-value.weak{color:var(--red);}
+.verdict-value.unknown{color:var(--text-soft);}
 
-  .imp { font-size: 10px; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; padding: 2px 6px; border-radius: 4px; flex-shrink: 0; margin-left: auto; }
-  .imp-High  { background: #fef2f2; color: #b91c1c; border: 1px solid #fca5a5; }
-  .imp-Medium{ background: #fffbeb; color: #b45309; border: 1px solid #fcd34d; }
-  .imp-Low   { background: #eef2ff; color: #4647d3; border: 1px solid #a5b4fc; }
+/* SECTIONS */
+.section{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:16px;opacity:0;transform:translateY(8px);transition:opacity 0.35s,transform 0.35s;}
+.section.visible{opacity:1;transform:translateY(0);}
+.section-title{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px;}
+.section-body{font-size:15px;color:var(--text-soft);line-height:1.7;}
+.section-body p+p{margin-top:8px;}
 
-  textarea { font-family: 'Plus Jakarta Sans', sans-serif; }
+/* WHY */
+.why-line{font-size:15px;color:var(--text-soft);line-height:1.7;padding:8px 0;border-bottom:1px solid var(--border);}
+.why-line:first-child{font-weight:600;color:var(--text);font-size:16px;}
+.why-line:last-child{border-bottom:none;}
 
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: transparent; }
-  ::-webkit-scrollbar-thumb { background: #d6cbff; border-radius: 6px; }
+/* PRIORITIES */
+.priority-list{display:flex;flex-direction:column;gap:8px;}
+.priority-item{display:flex;align-items:flex-start;gap:12px;padding:12px 14px;background:var(--bg);border-radius:10px;}
+.priority-num{width:22px;height:22px;background:var(--primary);color:white;border-radius:50%;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+.priority-text{font-size:14px;color:var(--text);line-height:1.5;}
+
+/* GAPS */
+.gaps-grid{display:flex;flex-direction:column;gap:8px;}
+.gap-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;font-size:14px;}
+.gap-item.matched{background:var(--green-soft);border:1px solid var(--green-border);color:var(--green);}
+.gap-item.missing{background:var(--red-soft);border:1px solid var(--red-border);color:var(--red);}
+.gap-ico{font-size:12px;font-weight:700;flex-shrink:0;}
+
+/* RISK */
+.risk-card{background:var(--amber-soft);border:1px solid var(--amber-border);border-radius:16px;padding:24px;margin-bottom:16px;opacity:0;transform:translateY(8px);transition:opacity 0.35s,transform 0.35s;}
+.risk-card.visible{opacity:1;transform:translateY(0);}
+.risk-icon{width:36px;height:36px;background:#f59e0b;border-radius:8px;display:flex;align-items:center;justify-content:center;margin-bottom:12px;font-size:16px;}
+.risk-title{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--amber);margin-bottom:8px;}
+.risk-body{font-size:14px;color:#78350f;line-height:1.7;}
+
+/* IMPACT */
+.impact-list{display:flex;flex-direction:column;gap:6px;}
+.impact-item{font-size:14px;color:var(--text-soft);line-height:1.6;padding:6px 0;border-bottom:1px solid var(--border);}
+.impact-item:last-child{border-bottom:none;}
+
+/* CTA */
+.cta-section{text-align:center;padding:32px 0 0;}
+.cta-section h3{font-size:18px;font-weight:700;margin-bottom:16px;}
+.cta-row{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.btn-primary{padding:12px 28px;background:var(--primary);color:white;border:none;border-radius:100px;font-size:14px;font-weight:700;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.15s;}
+.btn-primary:hover{background:#3536b8;}
+.btn-ghost{padding:12px 28px;background:none;border:1px solid var(--border);border-radius:100px;font-size:14px;font-weight:600;color:var(--text-soft);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all 0.15s;}
+.btn-ghost:hover{border-color:var(--primary);color:var(--primary);}
+.reset-link{display:block;text-align:center;margin-top:24px;font-size:13px;color:var(--text-muted);cursor:pointer;background:none;border:none;font-family:'Plus Jakarta Sans',sans-serif;}
+.reset-link:hover{color:var(--text-soft);}
+
+/* CV PROFILE BANNER */
+.cv-banner{display:none;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;background:var(--green-soft);border:1px solid var(--green-border);border-radius:var(--radius);margin-top:16px;}
+.cv-banner.active{display:flex;}
+.cv-banner-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0;}
+.cv-banner-text{font-size:13px;font-weight:600;color:var(--green);}
+.cv-banner-sub{font-size:11px;color:var(--text-muted);margin-top:2px;}
+.cv-banner-reset{background:none;border:1px solid var(--green-border);padding:4px 10px;border-radius:6px;font-size:11px;color:var(--text-muted);cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;}
 </style>
 </head>
+<body>
 
-<body class="bg-surface font-body text-on-surface overflow-x-hidden min-h-screen">
-
-<!-- ═══════════════════════ NAV ═══════════════════════ -->
-<nav class="fixed top-0 w-full z-50 bg-white/60 backdrop-blur-xl border-b border-indigo-500/10 shadow-[0_24px_48px_-12px_rgba(70,71,211,0.08)]">
-  <div class="flex justify-between items-center px-8 h-20 max-w-7xl mx-auto">
-    <div class="text-2xl font-extrabold tracking-tighter text-indigo-600 flex items-center gap-2 font-headline">
-      Scop'd
-      <span class="w-2 h-2 bg-indigo-500 rounded-full signal-pulse inline-block"></span>
-    </div>
-    <div class="hidden md:flex items-center gap-8">
-      <a href="#" class="text-indigo-600 font-semibold border-b-2 border-indigo-500 pb-1 tracking-tight">Analyse</a>
-      <a href="#" class="text-slate-500 hover:text-indigo-500 transition-colors font-semibold tracking-tight">History</a>
-    </div>
-    <div class="flex items-center gap-3">
-      <button class="p-2 text-on-surface-variant hover:bg-indigo-50 rounded-full transition-all active:scale-95">
-        <span class="material-symbols-outlined text-xl">notifications</span>
-      </button>
-      <button class="p-2 text-on-surface-variant hover:bg-indigo-50 rounded-full transition-all active:scale-95">
-        <span class="material-symbols-outlined text-xl">settings</span>
-      </button>
-    </div>
+<nav>
+  <div class="nav-logo">Scop'd <span class="nav-dot"></span></div>
+  <div class="nav-links">
+    <a href="#" class="nav-link active">Analyse</a>
+    <a href="#" class="nav-link">History</a>
   </div>
 </nav>
 
-<!-- ═══════════════════════ FORM VIEW ═══════════════════════ -->
-<div id="formView" class="pt-32 pb-20 px-6 md:px-20 max-w-3xl mx-auto" style="display:none;">
-
-  <div class="mb-10 space-y-4">
-    <span class="px-4 py-1.5 bg-secondary-container text-on-secondary-container rounded-full text-xs font-bold uppercase tracking-widest inline-flex items-center gap-2">
-      <span class="w-2 h-2 bg-primary rounded-full signal-pulse"></span>
-      Live Intelligence
-    </span>
-    <h1 class="text-5xl md:text-6xl font-extrabold tracking-tighter font-headline text-on-surface leading-tight">
-      Should you apply<br>to this job?
-    </h1>
-    <p class="text-xl text-on-surface-variant leading-relaxed">
-      Paste any job description. See what matters — and where you stand.
-    </p>
+<!-- FORM -->
+<div id="formView">
+  <div class="form-hero">
+    <div class="form-badge"><span class="nav-dot"></span> Live Intelligence</div>
+    <h1 class="form-h1">Should you apply<br>to this job?</h1>
+    <p class="form-sub">Paste any job description. See what capabilities matter — and where you stand.</p>
   </div>
+  <div class="form-card">
+    <label class="flabel" for="jdInput">Job Description</label>
+    <textarea id="jdInput" rows="8" placeholder="Paste the full job description here..."></textarea>
 
-  <div class="glass-card border border-outline-variant/20 rounded-xl p-10 space-y-6 shadow-[0_30px_80px_rgba(70,71,211,0.08)]">
-
-    <div>
-      <label class="block text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-2" for="jdInput">Paste job description</label>
-      <textarea id="jdInput" rows="7"
-        class="w-full bg-white/80 border border-outline-variant/40 rounded-lg p-4 text-sm text-on-surface placeholder-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary/50 resize-y transition"
-        placeholder="Paste the full job description here..."></textarea>
+    <div class="cv-banner" id="cvBanner">
+      <span class="cv-banner-dot"></span>
+      <div>
+        <div class="cv-banner-text">CV profile loaded</div>
+        <div class="cv-banner-sub" id="cvBannerSub">Analysing against your experience</div>
+      </div>
+      <button class="cv-banner-reset" onclick="resetCV()">Update CV</button>
     </div>
 
-    <div id="cvProfileBanner" class="hidden items-center justify-between gap-4 p-4 bg-emerald-50 border border-emerald-200 rounded-lg">
-      <div class="flex items-center gap-3">
-        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_6px_rgba(34,197,94,0.6)] flex-shrink-0"></span>
-        <div>
-          <div class="text-sm font-bold text-emerald-700">CV profile loaded</div>
-          <div class="text-xs text-slate-500 mt-0.5" id="cvProfileSub">Analysing against your experience</div>
-        </div>
+    <div class="cv-section" id="cvSection">
+      <div class="cv-header">
+        <div class="cv-title">Add your CV <span class="opt-tag">Optional</span></div>
       </div>
-      <button onclick="resetCVProfile()" class="text-xs font-semibold px-3 py-1.5 border border-emerald-300 rounded-md text-slate-500 hover:text-red-500 hover:border-red-300 transition">Update CV</button>
-    </div>
-
-    <div id="cvCard" class="border border-outline-variant/30 rounded-lg overflow-hidden bg-white/50">
-      <div class="flex items-center justify-between px-5 py-3 border-b border-outline-variant/20">
-        <div class="flex items-center gap-2 text-sm font-semibold text-on-surface">
-          Add your CV
-          <span class="text-xs font-bold uppercase tracking-widest text-amber-600 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded">Optional</span>
-        </div>
+      <div class="cv-tabs">
+        <button class="cv-tab active" onclick="switchTab('upload',this)">Upload PDF</button>
+        <button class="cv-tab" onclick="switchTab('paste',this)">Paste Text</button>
       </div>
-      <div class="px-5 py-2 text-xs text-on-surface-variant border-b border-outline-variant/20">
-        Upload once — Scopd reuses your profile for every role this session.
+      <div class="cv-pane active" id="paneUpload">
+        <label class="upload-btn" for="cvFile">↑ <span id="uploadLabel">Choose PDF</span></label>
+        <input type="file" id="cvFile" accept=".pdf" style="display:none" onchange="handleFile(this)">
+        <div id="fileStatus"></div>
       </div>
-      <div class="flex border-b border-outline-variant/20">
-        <button id="tabUpload" onclick="switchCVTab('upload',event)"
-          class="flex-1 py-2.5 text-xs font-bold tracking-wide uppercase transition border-b-2 border-primary bg-primary/5 text-primary">
-          Upload PDF
-        </button>
-        <button id="tabPaste" onclick="switchCVTab('paste',event)"
-          class="flex-1 py-2.5 text-xs font-bold tracking-wide uppercase transition border-b-2 border-transparent text-on-surface-variant hover:text-primary">
-          Paste Text
-        </button>
-      </div>
-      <div id="cvUploadArea" class="px-5 py-4">
-        <label for="cvFile"
-          class="inline-flex items-center gap-2 px-4 py-2 bg-surface-container-low border border-outline-variant/40 rounded-lg text-sm font-medium text-on-surface-variant cursor-pointer hover:border-primary hover:text-primary hover:bg-primary/5 transition">
-          <span class="material-symbols-outlined text-base">upload_file</span>
-          <span id="uploadLabel">Choose PDF file</span>
-        </label>
-        <input type="file" id="cvFile" accept=".pdf" class="hidden" onchange="handleFileUpload(this)">
-        <div id="fileStatus" class="hidden text-xs font-semibold mt-2"></div>
-      </div>
-      <div id="cvPasteArea" class="hidden">
-        <textarea id="cvPasteInput" rows="5"
-          class="w-full bg-transparent border-none p-5 text-sm text-on-surface placeholder-on-surface-variant/50 resize-y focus:outline-none"
-          placeholder="Paste your CV text here..."></textarea>
+      <div class="cv-pane" id="panePaste">
+        <textarea id="cvPaste" rows="5" placeholder="Paste your CV text here..."></textarea>
       </div>
     </div>
 
-    <button onclick="analyse()"
-      class="w-full py-4 bg-gradient-to-br from-indigo-500 to-purple-600 text-white font-bold text-base rounded-lg shadow-lg shadow-indigo-400/30 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-indigo-400/40 active:scale-95 transition-all duration-200">
-      Get my decision →
-    </button>
-    <p class="text-center text-xs text-on-surface-variant">
-      Based on real hiring signals · Takes ~5 seconds · No signup required
-    </p>
+    <button class="cta" onclick="analyse()">Get my decision →</button>
+    <p class="trust">Takes ~8 seconds · No signup required · Free</p>
   </div>
 </div>
 
-<!-- ═══════════════════════ LOADING ═══════════════════════ -->
-<div id="loading" class="hidden min-h-screen pt-32 flex flex-col items-center justify-center gap-0 px-6">
-  <h2 class="text-4xl font-extrabold tracking-tighter font-headline text-on-surface mb-8 text-center">
-    Decoding recruiter signals
-  </h2>
-  <div class="w-full max-w-md h-1.5 bg-surface-container rounded-full overflow-hidden mb-10">
-    <div id="loadingBar" class="loading-bar"></div>
-  </div>
-  <div class="w-full max-w-md flex flex-col gap-3">
-    <div id="lstep1" class="px-5 py-3.5 glass-card border border-primary/30 rounded-lg text-sm text-on-surface shadow-[0_0_20px_rgba(70,71,211,0.12)]">Reading job description</div>
-    <div id="lstep2" class="px-5 py-3.5 bg-white/40 border border-outline-variant/20 rounded-lg text-sm text-on-surface-variant">Extracting recruiter signals</div>
-    <div id="lstep3" class="px-5 py-3.5 bg-white/40 border border-outline-variant/20 rounded-lg text-sm text-on-surface-variant">Classifying role archetype</div>
-    <div id="lstep4" class="px-5 py-3.5 bg-white/40 border border-outline-variant/20 rounded-lg text-sm text-on-surface-variant">Evaluating screening risk</div>
-    <div id="lstep5" class="px-5 py-3.5 bg-white/40 border border-outline-variant/20 rounded-lg text-sm text-on-surface-variant">Generating insights</div>
+<!-- LOADING -->
+<div id="loading">
+  <div class="loading-h">Analysing your fit</div>
+  <div class="loading-bar-wrap"><div class="loading-bar" id="loadBar"></div></div>
+  <div class="loading-steps">
+    <div class="lstep active" id="ls1">Reading job description</div>
+    <div class="lstep" id="ls2">Extracting role capabilities</div>
+    <div class="lstep" id="ls3">Analysing your profile</div>
+    <div class="lstep" id="ls4">Evaluating capability fit</div>
+    <div class="lstep" id="ls5">Building your assessment</div>
   </div>
 </div>
 
-<!-- ═══════════════════════ ERROR ═══════════════════════ -->
-<div id="errorBox" class="hidden pt-32 px-6 max-w-2xl mx-auto">
-  <div id="errorMsg" class="px-5 py-4 bg-red-50 border border-red-200 rounded-lg text-sm text-red-700"></div>
+<!-- ERROR -->
+<div id="errorBox">
+  <div class="err-card" id="errorMsg"></div>
 </div>
 
-<!-- ═══════════════════════ RESULT ═══════════════════════ -->
-<div id="result" class="hidden pt-24 pb-16 px-6 md:px-20 max-w-7xl mx-auto">
-
-  <!-- Save row -->
-  <div class="flex items-center justify-between mb-6 pb-4 border-b border-outline-variant/30">
-    <div class="text-sm font-semibold text-on-surface-variant" id="saveRoleTitle"></div>
-    <div id="saveWrap"></div>
+<!-- RESULT -->
+<div id="result">
+  <div class="result-top">
+    <div class="result-role" id="resultRole"></div>
+    <button class="save-btn" id="saveBtn" onclick="saveResult()" style="display:none">+ Save</button>
   </div>
 
-  <!-- ── DECISION SECTION ── -->
-  <div id="decisionSection" class="hidden mb-10">
+  <!-- Verdict -->
+  <div class="verdict-section">
+    <div class="verdict-label">Capability Fit</div>
+    <div class="verdict-value" id="verdictValue"></div>
+  </div>
 
-    <!-- Verdict hero -->
-    <div class="mb-6 space-y-2">
-      <span class="px-3 py-1 bg-secondary-container text-on-secondary-container rounded-full text-[10px] font-bold uppercase tracking-widest inline-flex items-center gap-2">
-        <span class="w-1.5 h-1.5 bg-primary rounded-full signal-pulse"></span>
-        Live Intelligence
-      </span>
-      <h1 id="verdictHeadline" class="text-3xl md:text-4xl font-extrabold tracking-tighter font-headline text-on-surface"></h1>
-      <p id="verdictSub" class="text-base text-on-surface-variant max-w-2xl leading-relaxed"></p>
-      <p class="text-xs text-on-surface-variant font-medium tracking-wide">High-confidence match</p>
-    </div>
+  <!-- Why this fit -->
+  <div class="section" id="secWhy">
+    <div class="section-title">Why this assessment</div>
+    <div id="whyBody"></div>
+  </div>
 
-    <!-- Bento grid -->
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-5">
+  <!-- Screening Priorities -->
+  <div class="section" id="secPriorities">
+    <div class="section-title">Screening priorities</div>
+    <div class="priority-list" id="priorityList"></div>
+  </div>
 
-      <!-- Why this fit -->
-      <section id="whyCard" class="md:col-span-8 glass-card border border-outline-variant/15 p-7 rounded-xl relative overflow-hidden group decision-card">
-        <div class="absolute top-0 right-0 p-6 opacity-10 group-hover:opacity-25 transition-opacity pointer-events-none">
-          <span class="material-symbols-outlined text-7xl text-primary font-fill">auto_awesome</span>
-        </div>
-        <div class="relative z-10 space-y-4">
-          <h2 class="text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface-variant">Why this fit</h2>
-          <div id="whyBody" class="text-on-surface"></div>
-          <div class="flex items-center gap-2 text-primary font-semibold text-xs">
-            <span class="material-symbols-outlined font-fill text-sm">verified</span>
-            <span>High-Confidence Signal Detected</span>
-          </div>
-        </div>
-      </section>
+  <!-- Capability Gaps -->
+  <div class="section" id="secGaps">
+    <div class="section-title">Capability gaps</div>
+    <div class="gaps-grid" id="gapsGrid"></div>
+  </div>
 
-      <!-- Career impact -->
-      <section id="impactCard" class="md:col-span-4 bg-primary text-on-primary p-7 rounded-xl flex flex-col justify-between shadow-2xl shadow-primary/20 decision-card">
-        <div class="space-y-2">
-          <h2 class="text-[10px] font-bold uppercase tracking-[0.2em] opacity-70">Career impact</h2>
-          <h3 class="text-lg font-bold leading-tight tracking-tight font-headline">Your next chapter.</h3>
-          <p id="impactBody" class="text-on-primary/80 leading-relaxed text-sm"></p>
-        </div>
-        <div class="mt-6 pt-4 border-t border-white/10">
-          <p class="text-[10px] opacity-60">Powered by Scop'd Intelligence</p>
-        </div>
-      </section>
+  <!-- Interview Risk -->
+  <div class="risk-card" id="secRisk">
+    <div class="risk-icon">⚡</div>
+    <div class="risk-title">Interview risk</div>
+    <div class="risk-body" id="riskBody"></div>
+  </div>
 
-      <!-- Decision drivers -->
-      <section class="md:col-span-12 decision-card">
-        <h2 class="text-[10px] font-bold uppercase tracking-[0.2em] text-on-surface-variant mb-4">Decision drivers</h2>
-        <div id="driversGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
-      </section>
+  <!-- Career Impact -->
+  <div class="section" id="secImpact">
+    <div class="section-title">Career impact</div>
+    <div class="impact-list" id="impactList"></div>
+  </div>
 
-      <!-- Strengths -->
-      <section id="strengthsCard" class="md:col-span-6 glass-card border border-emerald-500/15 p-6 rounded-xl space-y-4 decision-card">
-        <div class="flex items-center gap-2">
-          <span class="material-symbols-outlined text-emerald-600 font-fill text-base">check_circle</span>
-          <h2 class="text-[10px] font-bold uppercase tracking-[0.2em] text-emerald-700">Strengths</h2>
-        </div>
-        <ul id="strengthsList" class="space-y-3"></ul>
-      </section>
-
-      <!-- Gaps -->
-      <section id="gapsCard" class="md:col-span-6 glass-card border border-red-200 bg-red-50/30 p-6 rounded-xl space-y-4 decision-card">
-        <div class="flex items-center gap-2">
-          <span class="material-symbols-outlined text-error font-fill text-base">error</span>
-          <h2 class="text-[10px] font-bold uppercase tracking-[0.2em] text-error">Potential gaps</h2>
-        </div>
-        <ul id="gapsList" class="space-y-2.5"></ul>
-      </section>
-
-      <!-- Interview risk -->
-      <section id="riskCard" class="md:col-span-12 bg-amber-50 border border-amber-200/50 p-7 rounded-xl relative overflow-hidden decision-card hidden">
-        <div class="absolute -right-6 -top-6 pointer-events-none">
-          <span class="material-symbols-outlined text-[8rem] text-amber-500/10">warning</span>
-        </div>
-        <div class="flex items-start gap-4 relative z-10">
-          <div class="p-3 bg-amber-500 rounded-lg text-white flex-shrink-0">
-            <span class="material-symbols-outlined text-xl font-fill">bolt</span>
-          </div>
-          <div class="space-y-2 flex-1">
-            <h2 class="text-[10px] font-bold uppercase tracking-[0.2em] text-amber-700">Interview risk</h2>
-            <h3 class="text-base font-bold font-headline text-amber-900">Watch out for this.</h3>
-            <p id="riskBody" class="text-amber-800/80 max-w-3xl leading-relaxed text-sm"></p>
-          </div>
-        </div>
-      </section>
-
-    </div>
-
-    <!-- CTA -->
-    <div class="flex flex-col items-center justify-center py-10 text-center space-y-5">
-      <h3 class="text-xl font-bold font-headline">What do you want to do next?</h3>
-      <div class="flex flex-col sm:flex-row gap-3">
-        <button onclick="reset()"
-          class="px-8 py-3 bg-primary text-on-primary rounded-full font-bold text-sm shadow-xl shadow-primary/30 active:scale-95 transition-transform flex items-center gap-2">
-          Analyse another role
-          <span class="material-symbols-outlined text-lg">arrow_forward</span>
-        </button>
-        <button onclick="reset()"
-          class="px-8 py-3 glass-card border border-outline-variant/20 rounded-full font-bold text-sm hover:bg-white transition-colors active:scale-95">
-          Improve my profile →
-        </button>
-      </div>
+  <!-- CTA -->
+  <div class="cta-section">
+    <h3>What do you want to do next?</h3>
+    <div class="cta-row">
+      <button class="btn-primary" onclick="reset()">Analyse another role →</button>
+      <button class="btn-ghost" onclick="reset()">Improve my profile</button>
     </div>
   </div>
 
-  <!-- ── CV PROFILE VIEW ── -->
-  <div id="cvResultBlocks" class="hidden max-w-3xl mx-auto">
-
-    <span class="section-label">Your DA profile</span>
-    <div class="rblock glass-card border border-outline-variant/20 rounded-xl p-8 mb-6" id="block-profile">
-      <div class="flex items-center gap-3 mb-4">
-        <div class="text-2xl font-extrabold font-headline text-on-surface" id="profileType"></div>
-        <span id="profileConfidence" class="text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full"></span>
-      </div>
-      <p class="text-on-surface-variant leading-relaxed mb-6" id="profileSummary"></p>
-      <div class="text-xs font-bold uppercase tracking-widest text-on-surface-variant mb-3">Profile dimensions</div>
-      <div id="profileDimensions" class="space-y-3"></div>
-    </div>
-
-    <span class="section-label">Roles you align with</span>
-    <div class="rblock glass-card border border-outline-variant/20 rounded-xl p-8 mb-6" id="block-recommended">
-      <div id="recommendedRoles" class="divide-y divide-outline-variant/20"></div>
-    </div>
-
-    <span class="section-label">Your signal map</span>
-    <div class="rblock glass-card border border-outline-variant/20 rounded-xl p-8 mb-6" id="block-strengths">
-      <div class="flex items-center gap-2 mb-4">
-        <span class="material-symbols-outlined text-emerald-600 font-fill text-lg">check_circle</span>
-        <span class="text-xs font-bold uppercase tracking-widest text-emerald-700">Strongest signals</span>
-      </div>
-      <div id="strongestSignals" class="divide-y divide-outline-variant/20"></div>
-    </div>
-    <div class="rblock glass-card border border-outline-variant/20 rounded-xl p-8 mb-6" id="block-gaps">
-      <div class="flex items-center gap-2 mb-4">
-        <span class="material-symbols-outlined text-error font-fill text-lg">error</span>
-        <span class="text-xs font-bold uppercase tracking-widest text-error">Signal gaps</span>
-      </div>
-      <div id="signalGaps" class="divide-y divide-outline-variant/20"></div>
-    </div>
-
-    <span class="section-label">Honest assessment</span>
-    <div class="rblock glass-card border border-outline-variant/20 rounded-xl p-8 mb-6" id="block-cv-honest">
-      <p class="text-on-surface-variant leading-relaxed" id="cvHonestText"></p>
-      <p class="text-primary font-semibold mt-4" id="nextStepsText"></p>
-    </div>
-
-    <div class="rblock glass-card border border-outline-variant/20 rounded-xl p-8 mb-6" id="block-jd-prompt">
-      <div class="text-xl font-bold font-headline text-on-surface mb-2">Now compare against a specific JD</div>
-      <p class="text-sm text-on-surface-variant mb-4">Paste a job description to see exactly how your profile matches against this role's hiring signals.</p>
-      <textarea id="jdPromptInput" rows="5"
-        class="w-full bg-white/80 border border-outline-variant/40 rounded-lg p-4 text-sm text-on-surface placeholder-on-surface-variant/50 focus:outline-none focus:ring-2 focus:ring-primary/30 resize-y mb-3"
-        placeholder="Paste a job description here..."></textarea>
-      <button onclick="analyseFromProfile()"
-        class="w-full py-3.5 bg-gradient-to-br from-indigo-500 to-purple-600 text-white font-bold rounded-lg shadow shadow-indigo-400/30 hover:-translate-y-0.5 transition-all">
-        Compare Against This JD →
-      </button>
-    </div>
-
-    <div class="flex flex-col gap-3 mt-8">
-      <button onclick="reset()"
-        class="w-full py-4 bg-primary text-on-primary rounded-lg font-bold shadow-lg shadow-primary/30 hover:-translate-y-0.5 transition-all active:scale-95">
-        Analyse Another Role →
-      </button>
-      <button onclick="reset()"
-        class="w-full py-3 text-sm text-on-surface-variant hover:text-error transition-colors font-medium">
-        ← Start over
-      </button>
-    </div>
-  </div>
-
-  <div class="text-center mt-12">
-    <button onclick="reset()" class="text-sm text-on-surface-variant hover:text-on-surface transition-colors">← Analyse another role</button>
-  </div>
-
+  <button class="reset-link" onclick="reset()">← Analyse another role</button>
 </div>
 
-<!-- ═══════════════════════ FOOTER ═══════════════════════ -->
-<footer class="bg-slate-50 w-full py-12 border-t border-indigo-500/5 mt-20">
-  <div class="flex flex-col md:flex-row justify-between items-center px-10 md:px-20 gap-4">
-    <div class="text-indigo-600 font-bold font-headline text-lg">Scopd</div>
-    <div class="text-xs text-slate-400">
-      <a href="#" class="hover:text-indigo-500 transition-colors">Privacy</a>
-      · <a href="#" class="hover:text-indigo-500 transition-colors">Terms</a>
-      · <a href="#" class="hover:text-indigo-500 transition-colors">Contact</a>
-    </div>
-    <div class="text-xs text-slate-400">© 2025 Scopd</div>
-  </div>
-</footer>
-
-<!-- ═══════════════════════ SCRIPT ═══════════════════════ -->
 <script>
 pdfjsLib.GlobalWorkerOptions.workerSrc='https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
 
-const sessionId = crypto.randomUUID();
-const LOG_URL = '/api/log';
-const STORAGE_KEY = 'fitfirst_da_saved_roles';
-const SK_PROFILE = 'lumaxCapabilityProfile';
-let lastRoleType=null, cvText=null, resultData=null;
-let currentScreen='form', currentMode='jd';
-let lstepInterval=null;
-function toggleSignals(btn){
-  var el=document.getElementById('coreSignalsExtra');
-  if(!el) return;
-  if(el.style.display==='none'){el.style.display='grid';btn.textContent='Show less';}
-  else{el.style.display='none';btn.textContent=btn.dataset.label;}
-}
+const SK_PROFILE = 'scopd_cv_profile';
+let cvText = null;
+let resultData = null;
+let lstepTimer = null;
 
-/* ── Extract a short heading from driver text ── */
-function extractDriverTitle(text=''){
-  const t=text.toLowerCase();
-  if(t.includes('dashboard')) return 'Dashboarding';
-  if(t.includes('reporting')||t.includes('report')) return 'Reporting output';
-  if(t.includes('sql')&&t.includes('quer')) return 'SQL querying';
-  if(t.includes('sql')) return 'SQL core';
-  if(t.includes('python')) return 'Python skills';
-  if(t.includes('stakeholder')) return 'Stakeholder skills';
-  if(t.includes('communication')) return 'Communication';
-  if(t.includes('tableau')||t.includes('power bi')||t.includes('looker')) return 'Visualisation tools';
-  if(t.includes('excel')) return 'Excel proficiency';
-  if(t.includes('pipeline')||t.includes('etl')) return 'Data pipelines';
-  if(t.includes('statistic')||t.includes('analysis')) return 'Analysis depth';
-  if(t.includes('business')) return 'Business insight';
-  if(t.includes('model')) return 'Data modelling';
-  if(t.includes('cloud')||t.includes('aws')||t.includes('azure')||t.includes('gcp')) return 'Cloud platform';
-  if(t.includes('automat')) return 'Automation';
-  if(t.includes('govern')||t.includes('quality')) return 'Data governance';
-  const words=text.split(/\s+/).slice(0,3).join(' ');
-  return words.length>25?words.substring(0,22)+'…':words;
-}
+function getProfile(){ try{ return JSON.parse(sessionStorage.getItem(SK_PROFILE)); }catch(e){ return null; } }
 
-/* ── Icons map for decision drivers ── */
-const DRIVER_ICONS = {
-  'SQL':'database','sql':'database',
-  'Python':'code','python':'code',
-  'Tableau':'query_stats','Power BI':'query_stats','Looker':'query_stats',
-  'Stakeholder':'groups','Communication':'groups',
-  'Excel':'table_chart',
-  'dashboard':'dashboard',
-  'reporting':'summarize',
-  'pipeline':'account_tree',
-  'cloud':'cloud',
-  'automat':'bolt',
-  'model':'schema',
-  'govern':'verified_user',
-  'default':'insights'
-};
-function driverIcon(label=''){
-  for(const [k,v] of Object.entries(DRIVER_ICONS)){
-    if(label.toLowerCase().includes(k.toLowerCase())) return v;
-  }
-  return DRIVER_ICONS.default;
-}
-
-/* ── Session helpers ── */
-function getCapabilityProfile(){
-  try{ return JSON.parse(sessionStorage.getItem(SK_PROFILE)); }catch(e){ return null; }
-}
-
-function renderCVProfileBanner(){
-  const profile = getCapabilityProfile();
-  const banner = document.getElementById('cvProfileBanner');
-  const cvCard = document.getElementById('cvCard');
-  if(profile){
-    banner.classList.remove('hidden');
-    banner.classList.add('flex');
-    const sigs = profile.strongest_signals||[];
-    document.getElementById('cvProfileSub').textContent = sigs.length>0
-      ? sigs.slice(0,3).join(' · ')+(sigs.length>3?' + more':'')
-      : 'Analysing against your experience';
-    cvCard.style.display='none';
-    if(profile._rawCVText) cvText=profile._rawCVText;
+function renderCVBanner(){
+  const p = getProfile();
+  const banner = document.getElementById('cvBanner');
+  const section = document.getElementById('cvSection');
+  if(p){
+    banner.classList.add('active');
+    const sigs = p.strengths || [];
+    document.getElementById('cvBannerSub').textContent = sigs.length ? sigs.slice(0,3).join(' · ') : 'Profile loaded';
+    section.style.display = 'none';
+    if(p._raw) cvText = p._raw;
   } else {
-    banner.classList.add('hidden');
-    banner.classList.remove('flex');
-    cvCard.style.display='block';
+    banner.classList.remove('active');
+    section.style.display = 'block';
   }
 }
 
-function resetCVProfile(){
+function resetCV(){
   sessionStorage.removeItem(SK_PROFILE);
-  cvText=null;
-  renderCVProfileBanner();
+  cvText = null;
+  renderCVBanner();
 }
 
-/* ── Loading steps ── */
-function startLoadingSteps(){
-  let idx=1;
-  if(lstepInterval) clearInterval(lstepInterval);
-  for(let i=1;i<=5;i++) setStepState(i,false);
-  setStepState(1,true);
-  const bar=document.getElementById('loadingBar');
-  if(bar){ bar.style.animation='none'; bar.offsetHeight; bar.style.animation=''; }
-  lstepInterval=setInterval(()=>{
-    setStepState(idx,false);
-    idx++;
-    if(idx<=5){ setStepState(idx,true); }
-    if(idx>5) clearInterval(lstepInterval);
-  },1200);
+function switchTab(tab, btn){
+  document.querySelectorAll('.cv-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.cv-pane').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(tab === 'upload' ? 'paneUpload' : 'panePaste').classList.add('active');
 }
 
-function setStepState(i,active){
-  const el=document.getElementById('lstep'+i);
-  if(!el) return;
-  if(active){
-    el.className='px-5 py-3.5 glass-card border border-primary/30 rounded-lg text-sm text-on-surface shadow-[0_0_20px_rgba(70,71,211,0.12)]';
+async function handleFile(input){
+  const file = input.files[0]; if(!file) return;
+  const s = document.getElementById('fileStatus');
+  s.style.display = 'block'; s.style.color = '#595c5e'; s.textContent = 'Reading...';
+  try{
+    const pdf = await pdfjsLib.getDocument({data: await file.arrayBuffer()}).promise;
+    let t = '';
+    for(let i=1;i<=pdf.numPages;i++){
+      const pg = await pdf.getPage(i);
+      const ct = await pg.getTextContent();
+      t += ct.items.map(x=>x.str).join(' ') + '\n';
+    }
+    cvText = t.trim();
+    s.textContent = '✓ ' + file.name; s.style.color = '#16a34a'; s.style.fontWeight = '600';
+    document.getElementById('uploadLabel').textContent = file.name;
+  }catch(err){
+    s.textContent = 'Could not read PDF — try Paste Text'; s.style.color = '#dc2626';
+  }
+}
+
+function startLoading(){
+  let i = 1;
+  if(lstepTimer) clearInterval(lstepTimer);
+  for(let n=1;n<=5;n++) setStep(n, false);
+  setStep(1, true);
+  const bar = document.getElementById('loadBar');
+  bar.style.animation = 'none'; bar.offsetHeight; bar.style.animation = '';
+  lstepTimer = setInterval(()=>{
+    setStep(i, false); i++;
+    if(i<=5) setStep(i, true);
+    if(i>5) clearInterval(lstepTimer);
+  }, 1400);
+}
+
+function setStep(n, active){
+  const el = document.getElementById('ls'+n); if(!el) return;
+  el.className = 'lstep' + (active ? ' active' : '');
+}
+
+function show(id){ document.getElementById(id).style.display = id === 'loading' ? 'flex' : 'block'; }
+function hide(id){ document.getElementById(id).style.display = 'none'; }
+
+async function analyse(){
+  const jd = document.getElementById('jdInput').value.trim();
+  if(jd.length < 100){ alert('Please paste a full job description.'); return; }
+  const pasted = document.getElementById('cvPaste').value.trim();
+  if(pasted) cvText = pasted;
+  const profile = getProfile();
+  if(!cvText && profile && profile._raw) cvText = profile._raw;
+
+  hide('formView'); hide('errorBox'); hide('result');
+  show('loading'); startLoading();
+
+  try{
+    const res = await fetch('/api/classify', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({jd, cvText: cvText || null})
+    });
+    const data = await res.json();
+    if(data.error) throw new Error(data.message || 'Analysis failed');
+
+    if(data.strengths && !getProfile()){
+      sessionStorage.setItem(SK_PROFILE, JSON.stringify({strengths: data.strengths, _raw: cvText}));
+    }
+
+    clearInterval(lstepTimer);
+    hide('loading');
+    resultData = data;
+    renderResult(data);
+    show('result');
+    window.scrollTo({top:0,behavior:'smooth'});
+  }catch(err){
+    clearInterval(lstepTimer);
+    hide('loading');
+    document.getElementById('errorMsg').textContent = err.message || 'Something went wrong.';
+    show('errorBox');
+    show('formView');
+  }
+}
+
+function reveal(id, delay=0){
+  setTimeout(()=>{
+    const el = document.getElementById(id); if(!el) return;
+    el.classList.add('visible');
+  }, delay);
+}
+
+function renderResult(data){
+  // Role label
+  document.getElementById('resultRole').textContent = data.role_label || '';
+
+  // Verdict
+  const v = (data.verdict || '').toLowerCase();
+  const vEl = document.getElementById('verdictValue');
+  vEl.textContent = data.verdict || 'Unable to evaluate';
+  vEl.className = 'verdict-value ' + (v.includes('confidently') ? 'strong' : v.includes('caution') ? 'moderate' : v.includes('not') ? 'weak' : 'unknown');
+
+  // Why
+  const why = data.why || [];
+  document.getElementById('whyBody').innerHTML = why.map(w => `<div class="why-line">${w}</div>`).join('');
+
+  // Screening priorities
+  const priorities = data.decision_reasons || [];
+  document.getElementById('priorityList').innerHTML = priorities.map((p,i) =>
+    `<div class="priority-item"><span class="priority-num">${i+1}</span><span class="priority-text">${p}</span></div>`
+  ).join('');
+
+  // Gaps
+  const strengths = data.strengths || [];
+  const gaps = data.gaps || [];
+  let gapsHtml = strengths.map(s =>
+    `<div class="gap-item matched"><span class="gap-ico">✓</span>${s}</div>`
+  ).join('') + gaps.map(g =>
+    `<div class="gap-item missing"><span class="gap-ico">✗</span>${g}</div>`
+  ).join('');
+  document.getElementById('gapsGrid').innerHTML = gapsHtml || '<div style="color:var(--text-muted);font-size:14px;">No CV provided — paste your CV to see capability gaps</div>';
+
+  // Risk
+  if(data.risk){
+    document.getElementById('riskBody').textContent = data.risk;
+    document.getElementById('secRisk').style.display = 'block';
   } else {
-    el.className='px-5 py-3.5 bg-white/40 border border-outline-variant/20 rounded-lg text-sm text-on-surface-variant';
+    document.getElementById('secRisk').style.display = 'none';
   }
+
+  // Career impact
+  const impact = data.career_impact || [];
+  document.getElementById('impactList').innerHTML = impact.map(i =>
+    `<div class="impact-item">${i}</div>`
+  ).join('');
+
+  // Reveal with stagger
+  let d = 0;
+  ['secWhy','secPriorities','secGaps','secRisk','secImpact'].forEach(id => {
+    reveal(id, d); d += 100;
+  });
+
+  // Save button
+  document.getElementById('saveBtn').style.display = 'block';
 }
 
-function stopLoadingSteps(){
-  if(lstepInterval) clearInterval(lstepInterval);
+function saveResult(){
+  document.getElementById('saveBtn').textContent = '✓ Saved';
+  document.getElementById('saveBtn').style.color = '#16a34a';
 }
 
-/* ── Screen switcher ── */
-function showScreen(screen){
-  currentScreen=screen;
-  document.getElementById('formView').style.display='none';
-  document.getElementById('loading').style.display='none';
-  document.getElementById('result').style.display='none';
-  document.getElementById('errorBox').style.display='none';
-  if(screen==='form'){
-    document.getElementById('formView').style.display='block';
-    renderCVProfileBanner();
-  } else if(screen==='loading'){
-    document.getElementById('loading').style.display='flex';
-  } else if(screen==='result'){
-    document.getElementById('result').style.display='block';
-  }
+function reset(){
+  cvText = null; resultData = null;
+  document.getElementById('jdInput').value = '';
+  document.getElementById('cvPaste').value = '';
+  document.getElementById('cvFile').value = '';
+  document.getElementById('fileStatus').style.display = 'none';
+  document.getElementById('uploadLabel').textContent = 'Choose PDF';
+  document.getElementById('errorBox').style.display = 'none';
+  document.getElementById('result').style.display = 'none';
+  hide('result'); hide('errorBox');
+  show('formView');
+  renderCVBanner();
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-/* ── Save ── */
-function getSavedRoles(){ try{ return JSON.parse(localStorage.getItem(STORAGE_KEY))||[]; }catch(e){ return []; } }
-
-function saveRole(data){
-  let roles=getSavedRoles();
-  const key=data.job_title||data.role_type;
-  if(roles.some(r=>r.job_title===key)) return;
-  if(roles.length>=5) roles.shift();
-  roles.push({id:Date.now(),job_title:key,role_type:data.role_type,fit_verdict:data.fit_verdict||null,saved_at:new Date().toISOString(),full_data:data});
-  localStorage.setItem(STORAGE_KEY,JSON.stringify(roles));
-  renderSaveButton(data);
-}
-
-function renderSaveButton(data){
-  if(currentMode==='cv-only'){ document.getElementById('saveWrap').innerHTML=''; return; }
-  const roles=getSavedRoles();
-  const key=data.job_title||data.role_type;
-  const saved=roles.some(r=>r.job_title===key);
-  document.getElementById('saveRoleTitle').textContent=data.role_title||data.job_title||'';
-  document.getElementById('saveWrap').innerHTML=saved
-    ? `<span class="text-xs font-bold text-emerald-600">✓ Saved</span>`
-    : `<button onclick="saveRole(resultData)" class="text-xs font-bold px-3 py-1.5 bg-white border border-outline-variant/40 rounded-md text-primary hover:bg-primary/5 hover:border-primary/40 transition">＋ Save</button>`;
-}
-
-/* ── CV tabs ── */
-function switchCVTab(tab,e){
-  document.getElementById('cvUploadArea').classList.toggle('hidden', tab!=='upload');
-  document.getElementById('cvPasteArea').classList.toggle('hidden', tab!=='paste');
-  document.getElementById('tabUpload').className = tab==='upload'
-    ? 'flex-1 py-2.5 text-xs font-bold tracking-wide uppercase transition border-b-2 border-primary bg-primary/5 text-primary'
-    : 'flex-1 py-2.5 text-xs font-bold tracking-wide uppercase transition border-b-2 border-transparent text-on-surface-variant hover:text-primary';
-  document.getElementById('tabPaste').className = tab==='paste'
-    ? 'flex-1 py-2.5 text-xs font-bold tracking-wide uppercase transition border-b-2 border-primary bg-primary/5 text-primary'
-    : 'flex-1 py-2.5 text-xs font-bold tracking-wide uppercase transition border-b-2 border-transparent text-on-surface-variant hover:text-primary';
-}
-
-/* ── File upload ── */
-async function handleFileUpload(input){
-  const file=input.files[0]; if(!file) return;
-  const s=document.getElementById('fileStatus');
-  s.classList.remove('hidden'); s.style.color='#595c5e'; s.textContent='Reading CV...';
-  try{
-    const pdf=await pdfjsLib.getDocument({data:await file.arrayBuffer()}).promise;
-    let t='';
-    for(let i=1;i<=pdf.numPages;i++){
-      const pg=await pdf.getPage(i);
-      const ct=await pg.getTextContent();
-      t+=ct.items.map(x=>x.str).join(' ')+'\n';
-    }
-    cvText=t.trim();
-    sessionStorage.setItem('fitfirst_cv',cvText);
-    s.textContent='✓ '+file.name; s.style.color='#16a34a'; s.style.fontWeight='600';
-    document.getElementById('uploadLabel').textContent=file.name;
-  }catch(err){
-    s.textContent='Could not read PDF. Use Paste Text instead.'; s.style.color='#b91c1c';
-  }
-}
-
-/* ── Log ── */
-async function logEvent(action){
-  try{
-    await fetch(LOG_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({
-      timestamp:new Date().toISOString(),sessionId,product:'da',eventType:action,action,
-      roleType:lastRoleType,jdTitle:resultData?.job_title||null,
-      fitVerdict:resultData?.fit_verdict||null,cvUploaded:!!(cvText),
-      topArchetype:resultData?.role_type||null
-    })});
-  }catch(e){}
-}
-
-/* ── showBlock helper ── */
-function showBlock(id,delay=0){
-  setTimeout(()=>{
-    const el=document.getElementById(id);
-    if(el){ el.classList.remove('hidden'); requestAnimationFrame(()=>requestAnimationFrame(()=>el.classList.add('visible'))); }
-  },delay);
-}
-
-/* ════════════════════════════════════
-   renderTopDecision — bento grid UI
-════════════════════════════════════ */
-function renderTopDecision(data){
-  const hasCv=!!(data.strengths&&data.strengths.length>0);
-  if(!hasCv) return;
-
-  const section=document.getElementById('decisionSection');
-  section.classList.remove('hidden');
-
-  const verdict=data.verdict||'Unable to Evaluate';
-  let verdictColor='text-on-surface';
-  if(verdict.toLowerCase().includes('confidently')) verdictColor='text-emerald-600';
-  else if(verdict.toLowerCase().includes('caution')) verdictColor='text-amber-600';
-  else if(verdict.toLowerCase().includes('not')||verdict.toLowerCase().includes('skip')) verdictColor='text-red-600';
-
-  const html = `
-    <!-- Hero -->
-    <div class="space-y-3 mb-10">
-      <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight ${verdictColor}">
-        ${verdict}
-      </h1>
-      <p class="text-sm text-text-soft">${data.role_label||''}</p>
-      <p class="text-xs text-text-muted font-medium tracking-wide">High-confidence match</p>
-    </div>
-
-    <!-- Why This Fit -->
-    <section class="glass-card border border-primary/15 p-7 rounded-2xl mb-8">
-      <h2 class="text-[10px] font-bold uppercase tracking-widest text-text-muted mb-4">Why this fit</h2>
-      <div class="space-y-2">
-        ${(data.why||[]).map((w,i) => i===0
-          ? '<p class="text-sm font-medium text-on-surface leading-snug">'+w+'</p>'
-          : '<p class="text-xs text-text-muted leading-relaxed">'+w+'</p>'
-        ).join('')}
-      </div>
-    </section>
-
-    <!-- Decision Drivers -->
-    ${data.decision_reasons && data.decision_reasons.length > 0 ? `
-      <div class="mb-8">
-        <h2 class="text-[10px] font-bold uppercase tracking-widest text-text-muted mb-4">Decision drivers</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          ${data.decision_reasons.map(reason => `
-            <div class="glass-card p-5 rounded-xl">
-              <h4 class="font-bold text-on-surface mb-1 text-sm">${reason.split(' ')[0]}</h4>
-              <p class="text-xs text-text-soft leading-relaxed">${reason}</p>
-            </div>
-          `).join('')}
-        </div>
-      </div>
-    ` : ''}
-
-    <!-- How You'll Be Evaluated -->
-    <section class="glass-card border border-primary/10 p-7 rounded-2xl mb-8">
-      <h2 class="text-[10px] font-bold uppercase tracking-widest text-text-muted mb-4">How you'll be evaluated</h2>
-      <ul class="space-y-2">
-        ${(data.decision_reasons||[]).slice(0,3).map(r => {
-          const skill = r.split(' ')[0].toLowerCase();
-          let eval_text = r;
-          if(skill==='sql') eval_text = 'SQL depth for handling real-world data scenarios and complex queries';
-          else if(skill==='stakeholder') eval_text = 'Clarity in translating business questions into measurable outcomes';
-          else if(skill==='dashboarding'||skill==='your') eval_text = 'Ability to design dashboards that reflect stakeholder needs';
-          else if(skill==='data') eval_text = 'Data handling depth for extraction, cleaning, and pipeline scenarios';
-          return '<li class="flex items-start gap-3"><span class="w-1.5 h-1.5 rounded-full bg-primary mt-1.5 flex-shrink-0"></span><p class="text-xs text-text-soft leading-relaxed">'+eval_text+'</p></li>';
-        }).join('')}
-      </ul>
-    </section>
-
-    <!-- Core Signals -->
-    <div class="mb-8">
-      <h2 class="text-[10px] font-bold uppercase tracking-widest text-text-muted mb-4">Core signals</h2>
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-3">
-        ${(data.strengths||[]).slice(0,4).map(s =>
-          '<div class="glass-card px-4 py-3 rounded-xl flex items-center gap-2"><span class="text-success text-xs font-bold">✓</span><span class="text-xs text-on-surface font-medium">'+s+'</span></div>'
-        ).join('')}
-        ${(data.gaps||[]).slice(0,1).map(g =>
-          '<div class="glass-card px-4 py-3 rounded-xl flex items-center gap-2 border border-red-200"><span class="text-warning text-xs font-bold">⚠</span><span class="text-xs text-on-surface font-medium">'+g+'</span></div>'
-        ).join('')}
-      </div>
-      ${((data.strengths||[]).length > 4 || (data.gaps||[]).length > 1) ? '<div id="coreSignalsExtra" style="display:none;" class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-3">' + (data.strengths||[]).slice(4).map(s => '<div class="glass-card px-4 py-3 rounded-xl flex items-center gap-2"><span class="text-success text-xs font-bold">✓</span><span class="text-xs text-on-surface font-medium">'+s+'</span></div>').join('') + (data.gaps||[]).slice(1).map(g => '<div class="glass-card px-4 py-3 rounded-xl flex items-center gap-2 border border-red-200"><span class="text-warning text-xs font-bold">⚠</span><span class="text-xs text-on-surface font-medium">'+g+'</span></div>').join('') + '</div><button onclick="toggleSignals(this)" data-label="+' + (Math.max(0,(data.strengths||[]).length-4) + Math.max(0,(data.gaps||[]).length-1)) + ' more" class="text-xs text-primary font-semibold hover:underline mb-3">+' + (Math.max(0,(data.strengths||[]).length-4) + Math.max(0,(data.gaps||[]).length-1)) + ' more</button>' : ''}
-      <p class="text-xs text-text-muted mt-3 font-medium">Strong — you meet ${Math.min((data.strengths||[]).length,6)} of 6 core signals</p>
-    </div>
-
-    <!-- Interview Risk -->
-    ${data.risk ? `
-      <section class="bg-amber-50 border border-warning/30 p-6 rounded-2xl mb-8">
-        <div class="flex items-start gap-4">
-          <div class="p-2 bg-amber-500 rounded-lg text-white flex-shrink-0">
-            <span style="font-size:18px;">⚡</span>
-          </div>
-          <div>
-            <h2 class="text-[10px] font-bold uppercase tracking-widest text-warning mb-2">Interview risk</h2>
-            <p class="text-xs text-amber-900 leading-relaxed">${data.risk}</p>
-          </div>
-        </div>
-      </section>
-    ` : ''}
-
-    <!-- Career Impact -->
-    ${data.career_impact && data.career_impact.length > 0 ? `
-      <section class="border-t border-primary/10 pt-8 mb-8">
-        <h2 class="text-[10px] font-bold uppercase tracking-widest text-text-muted mb-4">Long-term impact</h2>
-        <div class="space-y-2">
-          ${data.career_impact.map(c => `<p class="text-xs text-text-soft leading-relaxed">${c}</p>`).join('')}
-        </div>
-      </section>
-    ` : ''}
-
-    <!-- What This Means For You -->
-    <section class="glass-card border border-primary/20 bg-primary/5 p-7 rounded-2xl mb-8">
-      <h2 class="text-[10px] font-bold uppercase tracking-widest text-primary mb-3">What this means for you</h2>
-      <p class="text-sm text-on-surface leading-relaxed font-medium">
-        ${data.strengths && data.strengths.length >= 2
-          ? 'You are a strong match for this role\'s core requirements. Focus on demonstrating depth in ' + (data.gaps && data.gaps[0] ? data.gaps[0].toLowerCase().replace(' not strongly demonstrated','') : 'specialized areas') + ' during interviews.'
-          : 'Review the gaps identified above and prepare targeted examples before applying.'}
-      </p>
-    </section>
-
-    <!-- CTA -->
-    <div class="flex flex-col items-center justify-center py-8 text-center space-y-4">
-      <h3 class="text-lg font-bold">What do you want to do next?</h3>
-      <div class="flex flex-col sm:flex-row gap-3">
-        <button onclick="reset()"
-          class="px-8 py-3 bg-primary text-white rounded-full font-bold text-sm shadow-lg shadow-primary/30 active:scale-95 transition-transform flex items-center gap-2">
-          Analyse another role
-          <span>→</span>
-        </button>
-        <button onclick="reset()"
-          class="px-8 py-3 glass-card border border-primary/20 rounded-full font-bold text-sm hover:bg-primary/5 transition-colors active:scale-95">
-          Improve my profile →
-        </button>
-      </div>
-    </div>
-  `;
-
-  section.innerHTML = html;
-}
-
-/* ── Reset result blocks ── */
-function resetResultBlocks(){
-  document.getElementById('decisionSection').classList.add('hidden');
-  document.getElementById('cvResultBlocks').classList.add('hidden');
-  ['whyCard','impactCard','driversGrid','strengthsCard','gapsCard','riskCard'].forEach(id=>{
-    const el=document.getElementById(id);
-    if(el) el.classList.remove('visible');
-  });
-  document.querySelectorAll('.rblock').forEach(b=>b.classList.remove('visible'));
-}
-
-/* ════════════════════════════════════
-   ANALYSE (JD mode)
-════════════════════════════════════ */
-async function analyse(){
-  const jd=document.getElementById('jdInput').value.trim();
-  if(jd.length<100){ alert('Please paste a full job description.'); return; }
-  const pasted=document.getElementById('cvPasteInput').value.trim();
-  if(pasted) cvText=pasted;
-  const profile=getCapabilityProfile();
-  if(!cvText&&profile&&profile._rawCVText) cvText=profile._rawCVText;
-  currentMode='jd';
-  showScreen('loading');
-  startLoadingSteps();
-  try{
-    const res=await fetch('/api/classify',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({jd,cvText:cvText||null,product:'da',mode:'jd'})});
-    const data=await res.json();
-    if(data.error) throw new Error(data.error);
-    if(data.cv_present&&!getCapabilityProfile()){
-      sessionStorage.setItem(SK_PROFILE,JSON.stringify({strongest_signals:data.cv_present,_rawCVText:cvText}));
-    }
-    stopLoadingSteps();
-    resultData=data;
-    resetResultBlocks();
-    showScreen('result');
-    showResult(data);
-  }catch(err){
-    stopLoadingSteps();
-    showScreen('form');
-    document.getElementById('errorBox').style.display='block';
-    document.getElementById('errorMsg').textContent=err.message||'Something went wrong.';
-  }
-}
-
-/* ════════════════════════════════════
-   ANALYSE (CV-only mode)
-════════════════════════════════════ */
-async function analyseCVOnly(cv){
-  currentMode='cv-only';
-  showScreen('loading');
-  startLoadingSteps();
-  try{
-    const res=await fetch('/api/classify',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({cvText:cv,product:'da',mode:'cv-only'})});
-    const data=await res.json();
-    if(data.error) throw new Error(data.error);
-    stopLoadingSteps();
-    resultData=data;
-    resetResultBlocks();
-    showScreen('result');
-    showCVProfile(data);
-  }catch(err){
-    stopLoadingSteps();
-    showScreen('form');
-    document.getElementById('errorBox').style.display='block';
-    document.getElementById('errorMsg').textContent=err.message||'Something went wrong.';
-  }
-}
-
-/* ── Analyse from profile prompt ── */
-async function analyseFromProfile(){
-  const jd=document.getElementById('jdPromptInput').value.trim();
-  if(jd.length<100){ alert('Please paste a full job description.'); return; }
-  currentMode='jd';
-  showScreen('loading');
-  startLoadingSteps();
-  try{
-    const res=await fetch('/api/classify',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({jd,cvText:cvText||null,product:'da',mode:'jd'})});
-    const data=await res.json();
-    if(data.error) throw new Error(data.error);
-    stopLoadingSteps();
-    resultData=data;
-    resetResultBlocks();
-    showScreen('result');
-    showResult(data);
-  }catch(err){
-    stopLoadingSteps();
-    document.getElementById('errorBox').style.display='block';
-    document.getElementById('errorMsg').textContent=err.message||'Something went wrong.';
-  }
-}
-
-/* ── showResult ── */
-function showResult(data){
-  lastRoleType=data.role_type;
-  logEvent('analyse');
-  renderSaveButton(data);
-  renderTopDecision(data);
-}
-
-/* ── showCVProfile ── */
-function showCVProfile(data){
-  logEvent('cv-profile');
-  document.getElementById('cvResultBlocks').classList.remove('hidden');
-  document.getElementById('saveRoleTitle').textContent='Your DA Profile';
-  document.getElementById('saveWrap').innerHTML='';
-
-  const conf=data.profile_confidence||'Medium';
-  const confEl=document.getElementById('profileConfidence');
-  confEl.textContent=conf;
-  const confClasses={
-    High:'bg-emerald-100 text-emerald-700 border border-emerald-300',
-    Medium:'bg-amber-100 text-amber-700 border border-amber-300',
-    Low:'bg-red-100 text-red-700 border border-red-300'
-  };
-  confEl.className='text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full '+(confClasses[conf]||confClasses.Medium);
-
-  document.getElementById('profileType').textContent=data.profile_type||'—';
-  document.getElementById('profileSummary').textContent=data.profile_summary||'';
-
-  if(data.dimension_profile){
-    const dims=[
-      {k:'businessInsight',l:'Business Insight'},
-      {k:'sqlQuerying',l:'SQL / Querying'},
-      {k:'dataVisualisation',l:'Data Visualisation'},
-      {k:'statisticsAnalysis',l:'Statistics & Analysis'},
-      {k:'dataEngineeringAwareness',l:'Data Engineering'}
-    ];
-    document.getElementById('profileDimensions').innerHTML=dims.map(d=>`
-      <div class="flex items-center gap-3">
-        <span class="text-xs text-on-surface-variant w-44 flex-shrink-0">${d.l}</span>
-        <div class="flex-1 h-1.5 bg-surface-container rounded-full overflow-hidden">
-          <div class="dim-fill h-full" style="width:${((data.dimension_profile[d.k]||0)/5)*100}%"></div>
-        </div>
-        <span class="text-xs font-semibold text-on-surface-variant w-8 text-right">${data.dimension_profile[d.k]||0}/5</span>
-      </div>
-    `).join('');
-  }
-
-  const loc='UK';
-  document.getElementById('recommendedRoles').innerHTML=(data.recommended_roles||[]).map(r=>`
-    <div class="py-4 first:pt-0 last:pb-0">
-      <div class="text-sm font-semibold text-on-surface mb-2 flex items-center gap-2">
-        <span class="text-primary text-xs font-bold">→</span>${r}
-      </div>
-      <div class="flex items-center gap-2">
-        <span class="text-xs text-on-surface-variant mr-1">Explore jobs:</span>
-        <a class="text-xs font-semibold px-3 py-1 rounded-md border border-outline-variant/40 text-on-surface-variant hover:border-primary hover:text-primary hover:bg-primary/5 transition"
-          href="https://www.linkedin.com/jobs/search/?keywords=${encodeURIComponent(r+' '+loc)}" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="text-xs font-semibold px-3 py-1 rounded-md border border-outline-variant/40 text-on-surface-variant hover:border-primary hover:text-primary hover:bg-primary/5 transition"
-          href="https://www.indeed.com/jobs?q=${encodeURIComponent(r+' '+loc)}" target="_blank" rel="noopener">Indeed</a>
-      </div>
-    </div>
-  `).join('');
-
-  document.getElementById('strongestSignals').innerHTML=(data.strongest_signals||[]).map(s=>`
-    <div class="signal-row">
-      <span class="text-emerald-600 font-bold text-xs mt-0.5 flex-shrink-0">✓</span>
-      <span>${s}</span>
-    </div>
-  `).join('');
-
-  document.getElementById('signalGaps').innerHTML=(data.signal_gaps||[]).map(g=>`
-    <div class="signal-row">
-      <span class="text-error font-bold text-xs mt-0.5 flex-shrink-0">✗</span>
-      <div class="flex-1">
-        <div>${g.signal||g}</div>
-        ${g.why?`<div class="text-xs text-on-surface-variant mt-0.5">${g.why}</div>`:''}
-      </div>
-      ${g.impact?`<span class="imp imp-${g.impact}">${g.impact}</span>`:''}
-    </div>
-  `).join('');
-
-  document.getElementById('cvHonestText').textContent=data.honest_assessment||'';
-  document.getElementById('nextStepsText').textContent=data.next_steps||'';
-
-  let delay=0;
-  ['block-profile','block-recommended','block-strengths','block-gaps','block-cv-honest','block-jd-prompt'].forEach(id=>{
-    showBlock(id,delay); delay+=120;
-  });
-}
-
-/* ── Reset ── */
-function reset(){
-  cvText=null; resultData=null; currentMode='jd';
-  document.getElementById('cvFile').value='';
-  document.getElementById('fileStatus').classList.add('hidden');
-  document.getElementById('uploadLabel').textContent='Choose PDF file';
-  document.getElementById('cvPasteInput').value='';
-  document.getElementById('jdInput').value='';
-  document.getElementById('errorBox').style.display='none';
-  showScreen('form');
-}
-
-/* ══ Boot ══ */
-renderCVProfileBanner();
-showScreen('form');
-
-(function(){
-  try{
-    const savedId=sessionStorage.getItem('fitfirst_load_saved_id');
-    const savedKey=sessionStorage.getItem('fitfirst_load_saved_key');
-    if(savedId&&savedKey){
-      sessionStorage.removeItem('fitfirst_load_saved_id');
-      sessionStorage.removeItem('fitfirst_load_saved_key');
-      const roles=JSON.parse(localStorage.getItem(savedKey))||[];
-      const entry=roles.find(r=>String(r.id)===String(savedId));
-      if(entry){ resultData=entry.full_data; resetResultBlocks(); showScreen('result'); showResult(entry.full_data); return; }
-    }
-    const jd=sessionStorage.getItem('fitfirst_jd');
-    const cv=sessionStorage.getItem('fitfirst_cv');
-    const mode=sessionStorage.getItem('fitfirst_mode');
-    sessionStorage.removeItem('fitfirst_jd');
-    sessionStorage.removeItem('fitfirst_cv');
-    sessionStorage.removeItem('fitfirst_mode');
-    sessionStorage.removeItem('fitfirst_product');
-    if(mode==='cv-only'&&cv){ cvText=cv; analyseCVOnly(cv); }
-    else if(jd){ document.getElementById('jdInput').value=jd; if(cv) cvText=cv; analyse(); }
-    else { showScreen('form'); }
-  }catch(e){ showScreen('form'); }
-})();
+// Boot
+renderCVBanner();
+show('formView');
 </script>
-<script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
