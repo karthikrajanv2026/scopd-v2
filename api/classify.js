@@ -183,6 +183,8 @@ Rules:
 - risk = what the interviewer will probe or test. Specific questions or scenarios the candidate should prepare for. Not requirements — preparation intel.
 - hidden_expectations = unstated assumptions the employer holds about the ideal candidate that are not written anywhere in the job description. Not interview questions.
 - risk and hidden_expectations must not overlap. They cover different things.
+- career_impact.strengthens = specific skills, capabilities or experiences the candidate will build by doing this role. Must be concrete and career-relevant — e.g. "Agile delivery ownership", "Functional specification writing", "Client-facing requirement discovery". Never include personality traits or soft skills such as "Strong communication", "Attention to detail", or "Logical thinking".
+- career_impact.limited_exposure = specific career areas or disciplines this role does NOT develop, relevant to data, business or product careers — e.g. "Product strategy", "Data science", "Commercial ownership", "Advanced analytics". Never use generic phrases.
 - Be specific. Name actual skills and responsibilities. Do not be generic.
 Return ONLY JSON.`
     }]
