@@ -35,7 +35,7 @@ function buildResponse(role, candidate, fit) {
     gaps: capFit.gaps || [],
     decision_reasons: fit.screening_priorities || [],
     risk: fit.hidden_expectations ? fit.hidden_expectations.join('. ') : null,
-    career_impact: role.expectations || [],
+    career_impact: fit.career_impact || {},
     screening_priorities: fit.screening_priorities || [],
     hidden_expectations: fit.hidden_expectations || [],
     role,
@@ -171,7 +171,11 @@ Return ONLY valid JSON in this exact format:
   "goal_fit": null,
   "practical_fit": null,
   "screening_priorities": ["what recruiter will look for first", "second priority"],
-  "hidden_expectations": ["unstated expectation1", "unstated expectation2"]
+  "hidden_expectations": ["unstated expectation1", "unstated expectation2"],
+  "career_impact": {
+    "strengthens": ["specific skill 1", "specific skill 2"],
+    "limited_exposure": ["area 1", "area 2"]
+  }
 }
 
 Be specific. Name actual skills and responsibilities. Do not be generic.

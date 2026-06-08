@@ -506,6 +506,20 @@ textarea { font-family: inherit; }
   line-height: 1.6;
 }
 
+/* Hidden expectations */
+.hidden-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.hidden-item {
+  font-size: 14px;
+  color: #595c5e;
+  line-height: 1.6;
+  padding-left: 16px;
+  border-left: 3px solid rgba(70,71,211,0.20);
+}
+
 /* Career impact */
 .impact-list {
   list-style: none;
@@ -528,6 +542,14 @@ textarea { font-family: inherit; }
   font-weight: 700;
   margin-top: 1px;
 }
+.impact-subsection-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #595c5e;
+  margin-bottom: 8px;
+  margin-top: 16px;
+}
+.impact-subsection-label:first-child { margin-top: 0; }
 
 /* CTA */
 .cta-row {
@@ -719,10 +741,16 @@ footer {
     </div>
   </div>
 
+  <!-- HIDDEN EXPECTATIONS -->
+  <div class="result-section" id="hiddenSection" style="display:none;">
+    <span class="section-label">Hidden expectations</span>
+    <div class="hidden-list" id="hiddenList"></div>
+  </div>
+
   <!-- CAREER IMPACT -->
   <div class="result-section" id="impactSection" style="display:none;">
     <span class="section-label">Career impact</span>
-    <ul class="impact-list" id="impactList"></ul>
+    <div id="impactBody"></div>
   </div>
 
   <!-- CTA -->
@@ -881,11 +909,35 @@ function renderResult(data) {
   document.getElementById('riskText').textContent = risk;
   document.getElementById('riskSection').style.display = risk ? '' : 'none';
 
+  /* HIDDEN EXPECTATIONS */
+  const hidden = (data.fit && data.fit.hidden_expectations) || [];
+  const hiddenList = document.getElementById('hiddenList');
+  hiddenList.innerHTML = hidden.map(h => `<p class="hidden-item">${h}</p>`).join('');
+  document.getElementById('hiddenSection').style.display = hidden.length ? '' : 'none';
+
   /* CAREER IMPACT */
-  const impact = data.career_impact || [];
-  const impactList = document.getElementById('impactList');
-  impactList.innerHTML = impact.map(c => `<li class="impact-item">${c}</li>`).join('');
-  document.getElementById('impactSection').style.display = impact.length ? '' : 'none';
+  const impact = data.career_impact;
+  const impactBody = document.getElementById('impactBody');
+  const isStructured = impact && !Array.isArray(impact) && (impact.strengthens || impact.limited_exposure);
+  if (isStructured) {
+    let html = '';
+    if (impact.strengthens && impact.strengthens.length) {
+      html += `<p class="impact-subsection-label">This role strengthens:</p>`;
+      html += `<ul class="impact-list">${impact.strengthens.map(s => `<li class="impact-item">${s}</li>`).join('')}</ul>`;
+    }
+    if (impact.limited_exposure && impact.limited_exposure.length) {
+      html += `<p class="impact-subsection-label">Limited exposure to:</p>`;
+      html += `<ul class="impact-list">${impact.limited_exposure.map(s => `<li class="impact-item">${s}</li>`).join('')}</ul>`;
+    }
+    impactBody.innerHTML = html;
+    document.getElementById('impactSection').style.display = html ? '' : 'none';
+  } else if (Array.isArray(impact) && impact.length) {
+    impactBody.innerHTML = `<ul class="impact-list">${impact.map(c => `<li class="impact-item">${c}</li>`).join('')}</ul>`;
+    document.getElementById('impactSection').style.display = '';
+  } else {
+    impactBody.innerHTML = '';
+    document.getElementById('impactSection').style.display = 'none';
+  }
 }
 
 /* ── Analyse ── */
